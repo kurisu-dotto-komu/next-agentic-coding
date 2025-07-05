@@ -1,0 +1,32 @@
+# Project Structure and Organization
+
+## Route Organization
+
+- **Main routes location**: `./app/(routes)` folder
+- This organizational pattern keeps routes clearly separated
+- Follow Next.js App Router conventions
+
+## Directory Structure Guidelines
+
+- Keep related files close together
+- Use clear, descriptive folder names
+- Follow established project patterns
+- Group by feature rather than file type when appropriate
+
+## File Naming Conventions
+
+- Use consistent casing (follow existing patterns in the project)
+- Component files: PascalCase (e.g., `Button.tsx`)
+- Utility files: camelCase (e.g., `formatDate.ts`)
+- Test files: match the file they test with `.test.ts` or `.spec.ts`
+
+## Module Organization Best Practices
+
+- Co-locate related code
+- Keep test files next to the code they test
+- Separate concerns into appropriate directories:
+  - Components for UI elements
+  - Hooks for custom React hooks
+  - Utils for utility functions
+  - Types for TypeScript type definitions
+  - Services for API or external service integrations

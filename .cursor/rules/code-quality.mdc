@@ -1,0 +1,45 @@
+# Code Quality Standards
+
+## Code Style Principles
+
+- **Follow existing patterns** - always check neighboring files for style and structure
+- **Follow the DRY principle** - Don't Repeat Yourself
+- Extract common logic into reusable functions or components
+- Use configuration objects instead of repeating similar code blocks
+
+## Comments Philosophy
+
+- **Keep comments to a minimum**
+- Only include comments when explaining:
+  - Important business logic that isn't self-evident
+  - Unintuitive implementation details
+  - Complex algorithms or mathematical operations
+  - Workarounds for known issues (with issue references)
+
+## Examples
+
+### ❌ Bad: Obvious comments
+```typescript
+// Increment counter by 1
+counter++;
+
+// Return the user object
+return user;
+```
+
+### ✅ Good: Necessary comments
+```typescript
+// Debounce search to prevent API rate limiting (max 10 req/sec)
+const debouncedSearch = debounce(search, 100);
+
+// Using setTimeout to ensure state update completes before navigation
+// See: https://github.com/org/repo/issues/123
+setTimeout(() => navigate('/home'), 0);
+```
+
+## Code Organization
+
+- Group related functionality together
+- Use clear, descriptive names for functions and variables
+- Maintain consistent indentation and formatting
+- Extract magic numbers and strings into named constants

@@ -1,0 +1,45 @@
+# Import Patterns and Module Organization
+
+## Import Path Standards
+
+- **Use `@/` imports** for all non-sibling imports
+- **Use `./` imports** only for direct siblings in the same directory
+- **Avoid `../` imports** - they make refactoring difficult and indicate poor module organization
+
+## Examples
+
+### ❌ Bad: Relative parent imports
+```typescript
+import { Button } from '../../../components/Button';
+import { useAuth } from '../../hooks/useAuth';
+```
+
+### ✅ Good: Absolute imports with @/
+```typescript
+import { Button } from '@/components/Button';
+import { useAuth } from '@/hooks/useAuth';
+```
+
+### ✅ Good: Sibling imports
+```typescript
+// In components/Form/FormField.tsx
+import { FormLabel } from './FormLabel';
+```
+
+## Module Size Guidelines
+
+- **Keep modules under 120 lines**
+- If a file exceeds this limit, split it into smaller, focused modules
+- Extract:
+  - Complex logic into separate utility files
+  - Reusable components into their own files
+  - Types and interfaces into dedicated type files
+  - Constants into configuration files
+
+## File Editing Preference
+
+- **Prefer editing existing files** over creating new ones
+- Only create new files when:
+  - Splitting a large module
+  - Adding genuinely new functionality
+  - Improving code organization significantly

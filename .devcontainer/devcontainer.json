@@ -1,0 +1,21 @@
+{
+  "name": "Node.js & TypeScript",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "postCreateCommand": "npm install && npm install -g @anthropic-ai/claude-code",
+  "features": {
+    // uncomment for docker-in-docker
+    // "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "esbenp.prettier-vscode",
+        "dbaeumer.vscode-eslint",
+        "bradlc.vscode-tailwindcss",
+        "christian-kohler.path-intellisense"
+      ]
+    }
+  }
+}

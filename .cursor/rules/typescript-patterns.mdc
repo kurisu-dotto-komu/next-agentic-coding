@@ -1,0 +1,50 @@
+# TypeScript Patterns and Standards
+
+## Type System Usage
+
+- **Always use TypeScript**, never JavaScript
+- TypeScript provides type safety and better developer experience
+- All files should have `.ts` or `.tsx` extensions
+
+## Type System Integrity
+
+- **Never shortcut the type system**
+- Forbidden patterns:
+  - `// eslint-disable-next-line`
+  - `any` type (use `unknown` if type is truly unknown)
+  - `@ts-ignore` or `@ts-expect-error`
+- If you encounter type errors, fix them properly by:
+  - Creating proper type definitions
+  - Using type guards or type assertions with proper validation
+  - Refactoring code to be type-safe
+
+## Examples
+
+### ❌ Bad: Using any type
+```typescript
+function processData(data: any) {
+  return data.value;
+}
+```
+
+### ✅ Good: Proper typing
+```typescript
+interface DataType {
+  value: string;
+}
+
+function processData(data: DataType) {
+  return data.value;
+}
+```
+
+### ❌ Bad: Disabling type checking
+```typescript
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const unusedVar = 'something';
+```
+
+### ✅ Good: Remove unused code or use it properly
+```typescript
+// Simply remove unused variables or use them appropriately
+```

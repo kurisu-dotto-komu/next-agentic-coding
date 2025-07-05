@@ -1,0 +1,37 @@
+# React Component Patterns
+
+## Component Export Pattern
+
+- **Always use `export default function ComponentName`** for React components
+- Never use named exports for components
+- This pattern provides consistency and better developer experience
+
+## Examples
+
+### ❌ Bad: Named export
+```typescript
+export const MyComponent = () => {
+  return <div>Hello</div>;
+};
+```
+
+### ❌ Bad: Arrow function with default export
+```typescript
+const MyComponent = () => {
+  return <div>Hello</div>;
+};
+export default MyComponent;
+```
+
+### ✅ Good: Default function export
+```typescript
+export default function MyComponent() {
+  return <div>Hello</div>;
+}
+```
+
+## Component Organization
+
+- Keep components focused and single-purpose
+- If a component exceeds 120 lines, consider splitting it into smaller components
+- Extract complex logic into custom hooks or utility functions

@@ -1,0 +1,58 @@
+# Development Workflow Standards
+
+## Git Operations
+
+- **NEVER make git commands** unless explicitly instructed
+- This includes:
+  - `git add`
+  - `git commit`
+  - `git push`
+  - `git pull`
+  - Any other git operations
+
+## Documentation Creation
+
+- **NEVER proactively create documentation files** (*.md)
+- Only create documentation when explicitly requested
+- This includes:
+  - README files
+  - API documentation
+  - Architecture documents
+  - Any markdown files
+
+## Testing and Linting Commands
+
+- **NEVER call tools directly with `npx`**
+- Always use npm scripts defined in package.json
+- Forbidden: `npx playwright`, `npx eslint`
+- Correct: `npm run test`, `npm run lint`
+
+## Playwright Testing
+
+- **NEVER use `--headed` or `--debug` flags**
+- Always run tests in headless mode (default)
+- Using headed mode causes problems in the environment
+
+## Development Commands
+
+### Frequent Use
+- `npm run fix` - Run frequently to spot and fix issues early
+- `npm run screenshots` - Generate screenshots for visual verification
+
+### Occasional Use
+- `npm run test` - Use sparingly as it's expensive
+- `npm run test:build` - Use at the end of major work to verify build
+
+### Visual Testing
+- Create scenarios in `screenshots.spec.ts` for visual checks
+- Use the playwright MCP server for interactive testing
+
+## External Tools
+
+- **Use `context7` MCP tool** when struggling with unfamiliar libraries
+- This provides up-to-date documentation and examples
+
+## Development Server
+
+- **Dev server runs in background** - no need to start it
+- Focus on implementation rather than server management

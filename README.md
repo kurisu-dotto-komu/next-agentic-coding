@@ -1,36 +1,28 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Next Agentic Coding Boilerplate
 
-## Getting Started
+Basic `create-next-app` boilerplate with some additional Agentic Engineering features.
 
-First, run the development server:
+It is recommended to run this project within it's [Devcontainer](./.devcontainer/devcontainer.json).
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Testing and Feedback
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+These deterministic scripts help your Agents to stay on the right track.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Playwright [Installation](./.devcontainer/Dockerfile)
+- Playwright [config](./playwright.config.ts) & [tests](./tests)
+- Include a [sample e2e test](./tests/landing.spec.ts)
+- Include a [sample test screenshot](./tests/screenshots.spec.ts)
+- Add Typechecks, Linting, Formatting [NPM scripts](./package.json)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Claude
 
-## Learn More
+Claude is the main Agentic Engine. It is configured to use the following tools and commands:
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [Install](./.devcontainer/devcontainer.json) Claude Code CLI on devcontainer startup
+- [Playwright & Context7 MCPs](./.mcp.json)
+- [CLAUDE.md Rules](./.claude/CLAUDE.md)
+- `npm run yolo` for `claude --dangerously-skip-permissions`
+- Add Claude Slash Commands
+  - [Worktree Flow](./.claude/commands/worktrees)
+  - [Cursor Rules Sync](./.claude/commands/cursor-rules-sync.md) (ran once)
+  - [Code Review](./.claude/commands/code-review.md)
