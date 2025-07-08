@@ -12,17 +12,17 @@
 
 # Development
 
-- NEVER make git commands like commits unless I explicitly instruct you to
+- we are running a dev server on port 3000 in the background so you don't need to run it yourself
+- NEVER make git commands like commits unless I _explicitly_ instruct you to, and only do so once unles I say otherwise
 - NEVER proactively create documentation files (\*.md) unless explicitly requested
 - NEVER call `npx playwright` or `npx eslint` directly, only use `npm run` for testing, linting, etc.
-- NEVER use `--headed` or `--debug` for playwright tests, always use the default headless options, doing otherwise will cause problems
-- use `npm run fix` frequently to spot issues early, and fix them as you go
-- use `npm run test` to make sure everything's working during development, but only do this sparingly as it's quite expensive
+- NEVER use `--headed` or `--debug` when running playwright tests - you must use the default headless options
+- use the `playwright` mcp tool if you need to check the DOM or make temporary screenshots for visual debugging
+- use the `context7` mcp tool frequently for any library that might be newly updated or unfamiliar
+- use `npm run quickfix` frequently to spot issues early, and fix them as you go (this runs `eslint`, `tsc`, and `prettier`)
+- use and maintain `npm run test` to make sure everything's working during development
+- use and maintain the `npm run screenshots` test suite to ensure that the UI is working as expected after implementing a new feature
 - use `npm run test:build` at the end of a really big job to check the build is working
-- use `npm run screenshots` to generate screenshots that can be analysed visually
-- create and run specific scenarios in `screenshots.spec.ts` to visually check your work, or use the playwright mcp server
-- if you are having problems implementing something using a library you're not familiar with, try using the `context7` mcp tool
-- we are running a dev server in the background so you don't need to run it yourself
 
 # Project Specific
 

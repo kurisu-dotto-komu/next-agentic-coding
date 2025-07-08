@@ -1,0 +1,47 @@
+# File Management and Creation Rules
+
+## Core Principle: Minimize File Creation
+
+- **Do what has been asked; nothing more, nothing less**
+- Focus on achieving the goal with minimal changes
+
+## File Creation Restrictions
+
+### NEVER Create Files Unless Absolutely Necessary
+- Always consider if you can achieve the goal by editing existing files
+- Only create new files when they are essential for the requested functionality
+
+### ALWAYS Prefer Editing Existing Files
+- Look for existing files that can be modified instead of creating new ones
+- Check if similar functionality already exists that can be extended
+- Use existing patterns and structures in the codebase
+
+### Documentation Files
+
+- **NEVER proactively create documentation files** (*.md or README files)
+- Only create documentation files if explicitly requested by the user
+- This includes:
+  - README.md files
+  - API documentation
+  - Architecture documentation
+  - Any other markdown documentation
+
+## When File Creation is Acceptable
+
+Only create new files when:
+1. The user explicitly requests a new file
+2. Splitting a module that exceeds 120 lines
+3. The requested functionality genuinely requires a new module
+4. No existing file can reasonably contain the new code
+
+## Examples
+
+### ❌ Bad: Creating unnecessary files
+- Creating a new utility file for a single function that could go in an existing utils file
+- Creating a README.md without being asked
+- Creating separate files for small components that could be co-located
+
+### ✅ Good: Appropriate file management
+- Adding new functionality to existing files when possible
+- Only creating files when explicitly needed for the task
+- Keeping related code together in existing modules

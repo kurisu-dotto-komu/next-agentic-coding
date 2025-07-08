@@ -1,8 +1,14 @@
 # Development Workflow Standards
 
+## Development Server
+
+- **Dev server runs on port 3000 in background** - no need to start it yourself
+- Focus on implementation rather than server management
+
 ## Git Operations
 
 - **NEVER make git commands** unless explicitly instructed
+- Only execute git operations once unless told otherwise
 - This includes:
   - `git add`
   - `git commit`
@@ -32,27 +38,23 @@
 - **NEVER use `--headed` or `--debug` flags**
 - Always run tests in headless mode (default)
 - Using headed mode causes problems in the environment
+- Use the playwright MCP tool for DOM checking and temporary screenshots for visual debugging
 
 ## Development Commands
 
 ### Frequent Use
-- `npm run fix` - Run frequently to spot and fix issues early
-- `npm run screenshots` - Generate screenshots for visual verification
+- `npm run quickfix` - Run frequently to spot issues early and fix them as you go (runs `eslint`, `tsc`, and `prettier`)
+- `npm run test` - Use to ensure everything's working during development
+- `npm run screenshots` - Maintain the test suite to ensure UI works after implementing new features
 
-### Occasional Use
-- `npm run test` - Use sparingly as it's expensive
-- `npm run test:build` - Use at the end of major work to verify build
+### End of Major Work
+- `npm run test:build` - Run at the end of really big jobs to check the build is working
 
 ### Visual Testing
 - Create scenarios in `screenshots.spec.ts` for visual checks
-- Use the playwright MCP server for interactive testing
+- Use the playwright MCP tool for interactive testing and DOM inspection
 
 ## External Tools
 
-- **Use `context7` MCP tool** when struggling with unfamiliar libraries
+- **Use `context7` MCP tool frequently** for any library that might be newly updated or unfamiliar
 - This provides up-to-date documentation and examples
-
-## Development Server
-
-- **Dev server runs in background** - no need to start it
-- Focus on implementation rather than server management
