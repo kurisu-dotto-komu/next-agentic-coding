@@ -3,7 +3,8 @@
 - **Always read `INITIAL.md`** at the start of a new conversation to understand the project's architecture, goals, style, and constraints.
 - **Check `TASK.md`** before starting a new task. If the task isn't listed, add it with a brief description and today's date.
 - **Use consistent naming conventions, file structure, and architecture patterns**
-- **Use the dev server running on port 3000** - never start your own dev server.
+- **We are running Next.js dev server on port 3000** - never start your own next.js dev server.
+- **We are running a Convex dev server, which will automatically generate generated convex api files** - never start your own convex dev server.
 
 ### 🧱 Code Structure & Modularity
 
