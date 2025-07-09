@@ -10,6 +10,9 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  /* Custom grid template columns */
+  --grid-template-columns-auto-fill-100: repeat(auto-fill, minmax(100px, 1fr));
 }
 
 @media (prefers-color-scheme: dark) {
