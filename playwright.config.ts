@@ -22,8 +22,10 @@ export default defineConfig({
   reporter: "list",
   use: {
     baseURL: `http://localhost:${port}`,
-    // trace: 'on-first-retry',
+    // trace: "on-first-retry",
     headless: true,
+    navigationTimeout: 3000,
+    channel: "chromium",
   },
 
   projects: [
