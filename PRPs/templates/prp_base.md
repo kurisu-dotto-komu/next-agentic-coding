@@ -2,9 +2,11 @@ name: "Base PRP Template v2 - Context-Rich with Validation Loops"
 description: |
 
 ## Purpose
+
 Template optimized for AI agents to implement features with sufficient context and self-validation capabilities to achieve working code through iterative refinement.
 
 ## Core Principles
+
 1. **Context is King**: Include ALL necessary documentation, examples, and caveats
 2. **Validation Loops**: Provide executable tests/lints the AI can run and fix
 3. **Information Dense**: Use keywords and patterns from the codebase
@@ -14,51 +16,58 @@ Template optimized for AI agents to implement features with sufficient context a
 ---
 
 ## Goal
+
 [What needs to be built - be specific about the end state and desires]
 
 ## Why
+
 - [Business value and user impact]
 - [Integration with existing features]
 - [Problems this solves and for whom]
 
 ## What
+
 [User-visible behavior and technical requirements]
 
 ### Success Criteria
+
 - [ ] [Specific measurable outcomes]
 
 ## All Needed Context
 
 ### Documentation & References (list all context needed to implement the feature)
+
 ```yaml
 # MUST READ - Use Context7 MCP tool for library documentation
 - context7: [library-name]
   topic: [Specific sections/methods you'll need]
   why: [Key patterns and APIs needed]
-  
+
 - file: [path/to/component.tsx]
   why: [Pattern to follow, gotchas to avoid]
-  
+
 - context7: [library-name]
   topic: [Specific topic about common pitfalls]
   critical: [Key insight that prevents common errors]
 
 - docfile: [PRPs/ai_docs/file.md]
   why: [docs that the user has pasted in to the project]
-
 ```
 
 ### Current Codebase tree (run `tree` in the root of the project) to get an overview of the codebase
+
 ```bash
 
 ```
 
 ### Desired Codebase tree with files to be added and responsibility of file
+
 ```bash
 
 ```
 
 ### Known Gotchas of our codebase & Library Quirks
+
 ```typescript
 // CRITICAL: [Library name] requires [specific setup]
 // Example: Next.js requires 'use client' for interactive components
@@ -72,8 +81,9 @@ Template optimized for AI agents to implement features with sufficient context a
 ### Data models and structure
 
 Create the core data models, we ensure type safety and consistency.
+
 ```typescript
-Examples: 
+Examples:
  - TypeScript interfaces/types
  - Convex schema definitions
  - Zod validation schemas
@@ -103,8 +113,8 @@ Task N:
 
 ```
 
-
 ### Per task pseudocode as needed added to each task
+
 ```typescript
 
 // Task 1
@@ -112,20 +122,20 @@ Task N:
 export default function NewFeature({ param }: { param: string }) {
   // PATTERN: Always validate props with TypeScript (see components/ui/*)
   const validated = validateInput(param);  // throws Error
-  
+
   // GOTCHA: Server Components can't use useState
   // If interactivity needed, add 'use client' directive
-  
+
   // PATTERN: Use Convex hooks for real-time data
-  const data = useQuery(api.queries.items.list, { 
-    filter: validated 
+  const data = useQuery(api.queries.items.list, {
+    filter: validated
   });
-  
+
   // CRITICAL: Handle loading states
   if (data === undefined) {
     return <LoadingSpinner />;  // see components/ui/LoadingSpinner.tsx
   }
-  
+
   // PATTERN: Error boundaries for robustness
   return (
     <ErrorBoundary fallback={<ErrorMessage />}>
@@ -140,23 +150,25 @@ export default function NewFeature({ param }: { param: string }) {
 ```
 
 ### Integration Points
+
 ```yaml
 ENVIRONMENT:
   - add to: .env.local
   - pattern: "NEXT_PUBLIC_FEATURE_FLAG=true"
-  
+
 CONVEX:
   - schema: "Add new table 'features' with fields"
   - index: "Add index by_user on features table"
-  
+
 ROUTES:
-  - add to: app/(routes)/feature/page.tsx  
+  - add to: app/(routes)/feature/page.tsx
   - pattern: "Server Component with preloaded Convex query"
 ```
 
 ## Validation Loop
 
 ### Level 1: Syntax & Style
+
 ```bash
 # Run these FIRST - fix any errors before proceeding
 npm run quickfix              # Runs ESLint, TypeScript, Prettier
@@ -165,33 +177,34 @@ npm run quickfix              # Runs ESLint, TypeScript, Prettier
 ```
 
 ### Level 2: Unit Tests each new feature/file/function use existing test patterns
+
 ```typescript
 // CREATE tests/e2e/new-feature.spec.ts with these test cases:
-import { test, expect } from '@playwright/test';
+import { test, expect } from "@playwright/test";
 
-test('happy path functionality', async ({ page }) => {
-  await page.goto('/feature');
-  await expect(page.getByTestId('feature-content')).toBeVisible();
+test("happy path functionality", async ({ page }) => {
+  await page.goto("/feature");
+  await expect(page.getByTestId("feature-content")).toBeVisible();
 });
 
-test('handles errors gracefully', async ({ page }) => {
+test("handles errors gracefully", async ({ page }) => {
   // Simulate error condition
-  await page.route('**/api/**', route => route.abort());
-  await page.goto('/feature');
-  
-  await expect(page.getByText('Error loading')).toBeVisible();
+  await page.route("**/api/**", (route) => route.abort());
+  await page.goto("/feature");
+
+  await expect(page.getByText("Error loading")).toBeVisible();
 });
 
-test('real-time updates work', async ({ page }) => {
-  await page.goto('/feature');
-  
+test("real-time updates work", async ({ page }) => {
+  await page.goto("/feature");
+
   // Trigger update in another tab
   const page2 = await page.context().newPage();
-  await page2.goto('/feature');
-  await page2.getByTestId('update-button').click();
-  
+  await page2.goto("/feature");
+  await page2.getByTestId("update-button").click();
+
   // Verify update appears in first tab
-  await expect(page.getByText('Updated content')).toBeVisible();
+  await expect(page.getByText("Updated content")).toBeVisible();
 });
 ```
 
@@ -202,6 +215,7 @@ npm run test
 ```
 
 ### Level 3: Integration Test
+
 ```bash
 # Test the build
 npm run test:build
@@ -217,6 +231,7 @@ npm run screenshots
 ```
 
 ## Final validation Checklist
+
 - [ ] All tests pass: `npm run test`
 - [ ] No linting errors: `npm run quickfix`
 - [ ] Build succeeds: `npm run test:build`
@@ -229,6 +244,7 @@ npm run screenshots
 ---
 
 ## Anti-Patterns to Avoid
+
 - ❌ Don't use JavaScript - always TypeScript
 - ❌ Don't use named exports for components
 - ❌ Don't create files over 120 lines
