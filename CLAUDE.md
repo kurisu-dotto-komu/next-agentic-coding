@@ -2,7 +2,7 @@
 
 - **Always read `INITIAL.md`** at the start of a new conversation to understand the project's architecture, goals, style, and constraints.
 - **Check `TASK.md`** before starting a new task. If the task isn't listed, add it with a brief description and today's date.
-- **Use consistent naming conventions, file structure, and architecture patterns** as described in `INITIAL.md`.
+- **Use consistent naming conventions, file structure, and architecture patterns**
 - **Use the dev server running on port 3000** - never start your own dev server.
 
 ### 🧱 Code Structure & Modularity
@@ -21,6 +21,7 @@
 ### 🧪 Testing & Reliability
 
 - **Always create tests for new features** (components, API routes, utilities, etc).
+- **Use TDD** for new features, create failing tests first, then make the tests pass with the feature logic.
 - **After updating any logic**, check whether existing tests need to be updated. If so, do it.
 - **Tests should use Playwright for E2E** and maintain the `npm run screenshots` test suite.
   - Include at least:
@@ -44,14 +45,6 @@
 - **Use Convex** for backend/database operations when applicable.
 - **Follow the DRY principle** and keep comments minimal.
 - **Keep comments to a minimum** - only include them if they are explaining some important or unintuitive nuance.
-- Write **JSDoc comments for complex functions** when necessary:
-  ```typescript
-  /**
-   * Brief summary of what the function does.
-   * @param param1 - Description of parameter
-   * @returns Description of return value
-   */
-  ```
 
 ### 📚 Documentation & Explainability
 
