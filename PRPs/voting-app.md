@@ -74,9 +74,9 @@ Create a real-time voting application with:
   topic: DiceBear avatar generation
   why: Generate unique Mii-style avatars from user IDs
 
-- web_resource: https://github.com/boringdesigners/boring-avatars
-  topic: Boring Avatars React library
-  why: Alternative avatar generation option
+- web_resource: https://www.npmjs.com/package/@dicebear/core
+  topic: DiceBear core and avatar styles
+  why: Generate unique Mii-style avatars with deterministic seeds
 
 - web_resource: https://www.npmjs.com/package/react-qr-code
   topic: react-qr-code library
@@ -165,6 +165,7 @@ Create a real-time voting application with:
 
 // GOTCHA: DiceBear avatars need deterministic seeds for persistence
 // Use user's Convex document ID as seed
+// Import from @dicebear/core and @dicebear/collection, not the old API
 
 // GOTCHA: Viewport detection in Next.js App Router
 // Use middleware or client-side detection, not server components
@@ -246,10 +247,29 @@ CREATE components/ConvexClientProvider.tsx:
 
 Task 3: Install avatar and QR libraries
 INSTALL packages:
-  - npm install boring-avatars react-qr-code
+  - npm install @dicebear/core @dicebear/collection react-qr-code
   - npm install --save-dev @types/react
 
-Task 4: Create user session management
+Task 4: Create failing tests first (TDD approach)
+CREATE tests/e2e/vote-mobile.spec.ts:
+  - Write failing tests for avatar generation
+  - Write failing tests for voting interaction
+  - Write failing tests for vote persistence
+  - Expected: All tests fail initially
+
+CREATE tests/e2e/vote-desktop.spec.ts:
+  - Write failing tests for user grid display
+  - Write failing tests for real-time updates
+  - Write failing tests for QR code generation
+  - Expected: All tests fail initially
+
+Task 5: Create avatar generation utility
+CREATE lib/avatars.ts:
+  - DiceBear avatar generation with deterministic seeds
+  - Export generateAvatar function
+  - Expected: Avatar tests start passing
+
+Task 6: Create user session management
 CREATE convex/users.ts:
   - getOrCreateUser mutation
   - listActiveUsers query
@@ -260,83 +280,86 @@ CREATE lib/session.ts:
   - getSessionId from localStorage
   - Client-side only with 'use client'
 
-Task 5: Create vote management
+Task 7: Create vote management
 CREATE convex/votes.ts:
   - castVote mutation
   - getCurrentVotes query
   - getVoteStats query (returns percentages)
 
-Task 6: Create viewport detection
+Task 8: Create viewport detection
 CREATE lib/viewport.ts:
   - useViewport hook (client-side)
   - Returns 'mobile' | 'desktop' based on width
   - Use 768px breakpoint
 
-Task 7: Create Avatar component
+Task 9: Create Avatar component
 CREATE components/Avatar.tsx:
-  - Use boring-avatars library
+  - Use DiceBear library with @dicebear/core and @dicebear/collection
   - Props: seed, size, showVote, vote
   - Show whiteboard overlay when vote active
   - Animate whiteboard appearance
+  - Use 'adventurer' or 'avataaars' style for Mii-like appearance
 
-Task 8: Create VoteButton component
+Task 10: Create VoteButton component
 CREATE components/VoteButton.tsx:
   - 'use client' directive
   - Props: type ('O' | 'X'), onVote
   - Handle touch/mouse down and up
   - Visual feedback on press
 
-Task 9: Create VoteBar component
+Task 11: Create VoteBar component
 CREATE components/VoteBar.tsx:
   - Show O, X, and no-vote percentages
   - Animated transitions using CSS
   - Color-coded sections
 
-Task 10: Create UserGrid component
+Task 12: Create UserGrid component
 CREATE components/UserGrid.tsx:
   - Grid layout that auto-adjusts
   - Show all active users with avatars
   - Display current votes
   - CSS Grid with auto-fill
 
-Task 11: Create MobileVoteView component
+Task 13: Create MobileVoteView component
 CREATE components/MobileVoteView.tsx:
   - 'use client' directive
   - Large centered avatar
   - Two vote buttons below
   - Handle vote state
 
-Task 12: Create DesktopVoteView component
+Task 14: Create DesktopVoteView component
 CREATE components/DesktopVoteView.tsx:
   - VoteBar at top
   - UserGrid below
   - QRCode in top-right corner
 
-Task 13: Create main vote page
+Task 15: Create main vote page
 CREATE app/(routes)/vote/page.tsx:
   - Detect viewport (client-side)
   - Render appropriate view
   - Handle user session creation
 
-Task 14: Update landing page
+Task 16: Update landing page
 MODIFY app/page.tsx:
   - Remove default Next.js content
   - Add redirect to /vote
   - Or simple landing with "Enter" button
 
-Task 15: Create E2E tests
-CREATE tests/e2e/vote-mobile.spec.ts:
-  - Test avatar generation
-  - Test voting interaction
-  - Test vote persistence
+Task 17: Verify all tests pass
+VERIFY tests/e2e/vote-mobile.spec.ts:
+  - All avatar tests now pass
+  - All voting interaction tests pass
+  - All vote persistence tests pass
 
-CREATE tests/e2e/vote-desktop.spec.ts:
-  - Test user grid display
-  - Test real-time updates
-  - Test QR code generation
+VERIFY tests/e2e/vote-desktop.spec.ts:
+  - All user grid display tests pass
+  - All real-time update tests pass
+  - All QR code generation tests pass
 
 UPDATE tests/test-helpers.ts:
   - Add vote route to ROUTES
+
+EXPECTED: All tests that were failing in Task 4 now pass
 ```
 
 ### Per task pseudocode
@@ -378,7 +401,21 @@ export const getOrCreateUser = mutation({
   },
 });
 
-// Task 8: VoteButton component
+// Task 5: Avatar generation utility
+// lib/avatars.ts
+import { createAvatar } from '@dicebear/core';
+import { adventurer } from '@dicebear/collection';
+
+export function generateAvatar(seed: string, size = 96) {
+  return createAvatar(adventurer, {
+    seed,
+    size,
+    backgroundColor: ['b6e3f4','c0aede','d1d4f9'],
+    // Mii-like styling options
+  }).toString();
+}
+
+// Task 10: VoteButton component
 'use client';
 export default function VoteButton({ type, onVote }: VoteButtonProps) {
   const [isPressed, setIsPressed] = useState(false);
@@ -443,10 +480,12 @@ npm run quickfix              # Runs ESLint, TypeScript, Prettier
 # Expected: No errors. If errors, READ the error and fix.
 ```
 
-### Level 2: Unit Tests
+### Level 2: Unit Tests (TDD Approach)
+
+**CRITICAL: Tests should already exist from Task 4 and should now be passing**
 
 ```typescript
-// CREATE tests/e2e/vote-mobile.spec.ts
+// VERIFY tests/e2e/vote-mobile.spec.ts (created in Task 4)
 import { test, expect } from "@playwright/test";
 import { ROUTES } from "../test-helpers";
 
@@ -534,7 +573,7 @@ npm run screenshots
 
 ## Final validation Checklist
 
-- [ ] All tests pass: `npm run test`
+- [ ] All tests pass: `npm run test` (TDD approach followed)
 - [ ] No linting errors: `npm run quickfix`
 - [ ] Build succeeds: `npm run test:build`
 - [ ] TypeScript types are comprehensive
@@ -544,6 +583,8 @@ npm run screenshots
 - [ ] Follows all CLAUDE.md conventions
 - [ ] Convex dev server running during development
 - [ ] Mobile and desktop views work correctly
+- [ ] DiceBear avatars generate consistently with same seeds
+- [ ] Tests written before implementation (Task 4 completed first)
 
 ---
 
@@ -559,6 +600,8 @@ npm run screenshots
 - ❌ Don't ignore failing tests - fix them
 - ❌ Don't hardcode Convex URL - use env var
 - ❌ Don't forget to handle loading states with useQuery
+- ❌ Don't skip TDD - write failing tests first in Task 4
+- ❌ Don't implement features before tests exist and fail
 
 ---
 
