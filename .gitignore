@@ -36,5 +36,6 @@ next-env.d.ts
 # ai reports
 /reports/
 
-# worktrees
+# worktrees & worktree devcontainer configs
 /.worktrees/
+/.devcontainer/worktrees/

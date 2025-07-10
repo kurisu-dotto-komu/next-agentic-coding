@@ -21,6 +21,7 @@
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
+    "@anthropic-ai/claude-code": "^1.0.44",
     "@eslint/eslintrc": "^3",
     "@playwright/test": "^1.53.2",
     "@tailwindcss/postcss": "^4",
