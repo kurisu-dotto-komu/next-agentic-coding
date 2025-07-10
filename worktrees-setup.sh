@@ -18,9 +18,8 @@ if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ $# -eq 0 ]; then
     echo ""
     echo "📁 WHAT GETS CREATED:"
     echo "  • .worktrees/[name]/                    Git worktree directories"
-    echo "  • .devcontainer/worktrees/              Devcontainer configurations"
-    echo "  • .devcontainer/worktrees/[name]/       Individual worktree devcontainers"
-    echo "  • .devcontainer/worktrees/devcontainer.json  Overview devcontainer"
+    echo "  • .devcontainer/worktrees-overview/     Overview devcontainer"
+    echo "  • .devcontainer/worktree-[name]/        Individual worktree devcontainers"
     echo ""
     echo "👥 SUPPORTED WORKTREE NAMES (in order):"
     echo "  1. alice    (port 3100)    6. fiona    (port 3600)"
@@ -37,7 +36,7 @@ if [ "$1" = "--help" ] || [ "$1" = "-h" ] || [ $# -eq 0 ]; then
     echo ""
     echo "🚀 TYPICAL WORKFLOW:"
     echo "  1. $0 5             # Setup 5 worktrees"
-    echo "  2. Open VS Code in .devcontainer/worktrees/alice/"
+    echo "  2. Open VS Code in .devcontainer/worktree-alice/"
     echo "  3. Work on different features in parallel"
     echo "  4. $0 reset         # Clean up when done"
     echo ""
@@ -73,13 +72,23 @@ if [ "$1" = "reset" ]; then
         echo "  ✓ Removed .worktrees directory"
     fi
     
-    # Remove .devcontainer/worktrees directory
-    if [ -d ".devcontainer/worktrees" ]; then
-        echo "Removing .devcontainer/worktrees directory..."
-        rm -rf .devcontainer/worktrees
-        echo "  ✓ Removed .devcontainer/worktrees directory"
+    # Remove worktrees-overview devcontainer
+    if [ -d ".devcontainer/worktrees-overview" ]; then
+        echo "Removing .devcontainer/worktrees-overview directory..."
+        rm -rf .devcontainer/worktrees-overview
+        echo "  ✓ Removed .devcontainer/worktrees-overview directory"
     fi
     
+    # Remove individual worktree devcontainers
+    echo "Removing individual worktree devcontainers..."
+    for worktree_dir in .devcontainer/worktree-*; do
+        if [ -d "$worktree_dir" ]; then
+            echo "  → Removing $worktree_dir"
+            rm -rf "$worktree_dir"
+        fi
+    done
+    echo "  ✓ Removed individual worktree devcontainers"
+        
     echo "✅ Reset complete! All worktrees and configurations have been removed."
     exit 0
 fi
@@ -115,31 +124,13 @@ echo "Cleaning up stale worktree references..."
 git worktree prune
 echo "  ✓ Cleaned up stale worktree references"
 
-# Ensure .devcontainer/worktrees exists
-mkdir -p .devcontainer/worktrees
-
-# Extract extensions from base devcontainer.json and format them properly
-BASE_EXTENSIONS=$(cat .devcontainer/devcontainer.json | jq -r '.customizations.vscode.extensions[]' | sed 's/^/        "/' | sed 's/$/",/' | sed '$ s/,$//')
-
-# Create Worktrees Overview devcontainer.json
+# Create Worktrees Overview devcontainer
 echo "Creating Worktrees Overview devcontainer..."
-cat > .devcontainer/worktrees/devcontainer.json << EOF
-{
-  "name": "Worktrees Overview",
-  "build": {
-    "dockerfile": "../Dockerfile"
-  },
-  "workspaceFolder": "/workspaces/\${localWorkspaceFolderBasename}/.worktrees",
-  "postCreateCommand": "npm install",
-  "customizations": {
-    "vscode": {
-      "extensions": [
-$BASE_EXTENSIONS
-      ]
-    }
-  }
-}
-EOF
+mkdir -p .devcontainer/worktrees-overview
+
+# Copy base devcontainer.json and update specific fields for overview
+jq '.name = "Worktrees Overview" | .workspaceFolder = "/workspaces/\(env.localWorkspaceFolderBasename)/.worktrees"' \
+  .devcontainer/devcontainer.json > .devcontainer/worktrees-overview/devcontainer.json
 echo "  ✓ Created Worktrees Overview devcontainer config"
 
 # Create/update worktrees and their devcontainer configs
@@ -171,29 +162,15 @@ for i in "${!WORKTREES[@]}"; do
     fi
     
     # Create devcontainer directory
-    mkdir -p .devcontainer/worktrees/$WORKTREE_NAME
+    mkdir -p .devcontainer/worktree-$WORKTREE_NAME
     
-    # Generate devcontainer.json for this worktree
-    cat > .devcontainer/worktrees/$WORKTREE_NAME/devcontainer.json << EOF
-{
-  "name": "$(echo $WORKTREE_NAME | sed 's/./\U&/') Worktree",
-  "postCreateCommand": "npm install",
-  "build": {
-    "dockerfile": "../../Dockerfile"
-  },
-  "workspaceFolder": "/workspaces/\${localWorkspaceFolderBasename}/.worktrees/$WORKTREE_NAME",
-  "remoteEnv": {
-    "APP_PORT": "$PORT"
-  },
-  "customizations": {
-    "vscode": {
-      "extensions": [
-$BASE_EXTENSIONS
-      ]
-    }
-  }
-}
-EOF
+    # Generate devcontainer.json for this worktree by copying base and updating specific fields
+    CAPITALIZED_NAME=$(echo $WORKTREE_NAME | sed 's/./\U&/')
+    jq --arg name "$CAPITALIZED_NAME Worktree" \
+       --arg workspaceFolder "/workspaces/\(env.localWorkspaceFolderBasename)/.worktrees/$WORKTREE_NAME" \
+       --arg port "$PORT" \
+       '.name = $name | .workspaceFolder = $workspaceFolder | .remoteEnv.APP_PORT = $port' \
+       .devcontainer/devcontainer.json > .devcontainer/worktree-$WORKTREE_NAME/devcontainer.json
     
     echo "  ✓ Created devcontainer config for $WORKTREE_NAME (port: $PORT)"
 done

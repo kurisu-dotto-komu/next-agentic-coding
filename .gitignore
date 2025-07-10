@@ -38,4 +38,4 @@ next-env.d.ts
 
 # worktrees & worktree devcontainer configs
 /.worktrees/
-/.devcontainer/worktrees/
+/.devcontainer/worktree*
