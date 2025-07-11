@@ -129,8 +129,10 @@ echo "Creating Worktrees Overview devcontainer..."
 mkdir -p .devcontainer/worktrees-overview
 
 # Copy base devcontainer.json and update specific fields for overview
-jq '.name = "Worktrees Overview" | .workspaceFolder = "/workspaces/${localWorkspaceFolderBasename}/.worktrees" | .build.dockerfile = "../Dockerfile"' \
-  .devcontainer/devcontainer.json > .devcontainer/worktrees-overview/devcontainer.json
+# Remove comments before processing with jq
+sed 's://.*::g' .devcontainer/devcontainer.json | \
+  jq '.name = "Worktrees Overview" | .workspaceFolder = "/workspaces/${localWorkspaceFolderBasename}/.worktrees" | .build.dockerfile = "../Dockerfile"' \
+  > .devcontainer/worktrees-overview/devcontainer.json
 echo "  ✓ Created Worktrees Overview devcontainer config"
 
 # Create/update worktrees and their devcontainer configs
@@ -166,11 +168,13 @@ for i in "${!WORKTREES[@]}"; do
     
     # Generate devcontainer.json for this worktree by copying base and updating specific fields
     CAPITALIZED_NAME=$(echo $WORKTREE_NAME | sed 's/./\U&/')
-    jq --arg name "$CAPITALIZED_NAME Worktree" \
-       --arg workspaceFolder "/workspaces/\${localWorkspaceFolderBasename}/.worktrees/$WORKTREE_NAME" \
-       --arg port "$PORT" \
-       '.name = $name | .workspaceFolder = $workspaceFolder | .remoteEnv.APP_PORT = $port | .build.dockerfile = "../Dockerfile"' \
-       .devcontainer/devcontainer.json > .devcontainer/worktree-$WORKTREE_NAME/devcontainer.json
+    # Remove comments before processing with jq
+    sed 's://.*::g' .devcontainer/devcontainer.json | \
+      jq --arg name "$CAPITALIZED_NAME Worktree" \
+         --arg workspaceFolder "/workspaces/\${localWorkspaceFolderBasename}/.worktrees/$WORKTREE_NAME" \
+         --arg port "$PORT" \
+         '.name = $name | .workspaceFolder = $workspaceFolder | .remoteEnv.APP_PORT = $port | .build.dockerfile = "../Dockerfile"' \
+         > .devcontainer/worktree-$WORKTREE_NAME/devcontainer.json
     
     echo "  ✓ Created devcontainer config for $WORKTREE_NAME (port: $PORT)"
 done
