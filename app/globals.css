@@ -3,6 +3,12 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --coffee-dark: #3e2723;
+  --coffee-medium: #6d4c41;
+  --coffee-light: #8d6e63;
+  --coffee-cream: #d7ccc8;
+  --coffee-foam: #efebe9;
+  --amber-accent: #ff6f00;
 }
 
 @theme inline {
@@ -23,4 +29,82 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Coffee Theme Custom Styles */
+
+/* Coffee cup loading animation */
+@keyframes steam {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(-20px) scale(1.5);
+    opacity: 0;
+  }
+}
+
+.coffee-steam {
+  animation: steam 2s ease-out infinite;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--coffee-foam);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--coffee-medium);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--coffee-dark);
+}
+
+/* Coffee shop background pattern */
+.coffee-shop-bg {
+  background-image:
+    radial-gradient(
+      circle at 20% 50%,
+      rgba(139, 69, 19, 0.1) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 80% 80%,
+      rgba(160, 82, 45, 0.1) 0%,
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 40% 80%,
+      rgba(210, 105, 30, 0.1) 0%,
+      transparent 50%
+    );
+}
+
+/* Input focus styles */
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  ring: 2px;
+  ring-color: var(--amber-accent);
+  border-color: transparent;
+}
+
+/* Transition for theme switching */
+* {
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }

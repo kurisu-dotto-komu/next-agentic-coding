@@ -3,12 +3,6 @@
   "build": {
     "dockerfile": "Dockerfile"
   },
-  "mounts": [
-    "source=${env:HOME}/.claude,target=/home/node/.claude,type=bind"
-  ],
-  "remoteEnv": {
-    "CLAUDE_CONFIG_DIR": "/home/node/.claude"
-  },
   "postCreateCommand": "npm install",
   "customizations": {
     "vscode": {

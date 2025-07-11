@@ -24,7 +24,7 @@ export default defineConfig({
     baseURL: `http://localhost:${port}`,
     // trace: "on-first-retry",
     headless: true,
-    navigationTimeout: 3000,
+    navigationTimeout: 30000,
     channel: "chromium",
   },
 

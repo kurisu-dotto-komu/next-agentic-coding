@@ -16,7 +16,10 @@
     "yolo": "claude --dangerously-skip-permissions"
   },
   "dependencies": {
+    "@dicebear/collection": "^9.2.3",
+    "@dicebear/core": "^9.2.3",
     "convex": "^1.25.2",
+    "framer-motion": "^12.23.3",
     "next": "15.3.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
