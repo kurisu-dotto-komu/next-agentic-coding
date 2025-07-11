@@ -9,13 +9,13 @@
 - **Never create a file longer than 150 lines of code.** If a file approaches this limit, refactor by splitting it into modules or helper files.
 - **Organize code into clearly separated modules**, grouped by feature or responsibility.
   For Next.js this looks like:
-  - Components in `/components` or colocated with routes
+  - Components in `/app/components/ComponentName.tsx`
   - API routes in `/app/api`
-  - Utility functions in `/lib` or `/utils`
-  - Types in `/types` or colocated with features
+  - Utility functions in `/app/utils`
+  - Types in `/app/types`
 - **Use `@/` imports** unless the component is a direct `./` sibling, avoid `../` imports.
 - **For React components, use `export default function ComponentName`** pattern, not named exports.
-- **Main routes are in `./app/(routes)`** folder for better organization.
+- **Main routes are in `./app/(routes)/route/page.tsx`** folder for better organization.
 
 ### 🧪 Testing & Reliability
 
