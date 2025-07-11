@@ -1,4 +1,4 @@
-name: "Base PRP Template v3 - Context-Rich with Validation Loops"
+name: "Base PLAN Template v3 - Context-Rich with Validation Loops"
 description: |
 
 ## Purpose
@@ -93,7 +93,7 @@ Examples:
 
 ```
 
-### list of tasks to be completed to fullfill the PRP in the order they should be completed
+### list of tasks to be completed to fullfill the PLAN in the order they should be completed
 
 ```yaml
 Task 1:

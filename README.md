@@ -24,10 +24,10 @@ It is recommended to run this project within it's [Devcontainer](./.devcontainer
 
 The PRP (Plan, Review, Proceed) system helps you manage development tasks efficiently:
 
-1. **Add your idea** to `planning/ideas/foo.idea.md`
-2. **Generate a PRP** in yolo mode with `/prp-generate foo.idea.md`
-3. **Review and modify** the generated PRP in `planning/prps/foo.prp.md`
-4. **Execute the PRP** with `/prp-execute foo.prp.md`
+1. **Add your IDEA** to `prp/ideas/foo.idea.md`
+2. **Generate a PLAN** in yolo mode with `/generate-plan foo.idea.md`
+3. **Review and modify** the generated PLAN in `prp/plans/foo.plan.md`
+4. **Execute the PLAN** with `/execute-plan foo.plan.md`
 
 ## Key Technologies
 

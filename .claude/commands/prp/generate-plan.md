@@ -1,16 +1,16 @@
-# Create PRP
+# Create PLAN
 
 ## Feature file: $ARGUMENTS
 
-Generate a complete PRP for general feature implementation with thorough research. Ensure context is passed to the AI agent to enable self-validation and iterative refinement. Read the feature file first to understand what needs to be created, how the examples provided help, and any other considerations.
+Generate a complete PLAN for general feature implementation with thorough research. Ensure context is passed to the AI agent to enable self-validation and iterative refinement. Read the feature file first to understand what needs to be created, how the examples provided help, and any other considerations.
 
-The AI agent only gets the context you are appending to the PRP and training data. Assume the AI agent has access to the codebase and the same knowledge cutoff as you, so it's important that your research findings are included or referenced in the PRP. The Agent has WebSearch capabilities, so pass urls to documentation and examples.
+The AI agent only gets the context you are appending to the PLAN and training data. Assume the AI agent has access to the codebase and the same knowledge cutoff as you, so it's important that your research findings are included or referenced in the PLAN. The Agent has WebSearch capabilities, so pass urls to documentation and examples.
 
 ## Research Process
 
 1. **Codebase Analysis**
    - Search for similar components/patterns in the codebase
-   - Identify files to reference in PRP (especially in app/(routes)/ and components/)
+   - Identify files to reference in PLAN (especially in app/(routes)/ and components/)
    - Note existing conventions to follow from CLAUDE.md
    - Check Playwright test patterns for validation approach
 
@@ -20,17 +20,17 @@ The AI agent only gets the context you are appending to the PRP and training dat
    - Search for implementation examples in the Context7 documentation
    - Find best practices and common pitfalls in the library docs
    - Fallback to web search for library documentation if Context7 doesn't have it
-   - Note: The AI agent will have access to Context7, so reference it in the PRP
+   - Note: The AI agent will have access to Context7, so reference it in the PLAN
 
 3. **User Clarification** (if needed)
    - Specific patterns to mirror and where to find them?
    - Integration requirements and where to find them?
 
-## PRP Generation
+## PLAN Generation
 
-Using planning/templates/prp-base.template.md as template:
+Using `prp/templates/plan-base.template.md` as template:
 
-### Critical Context to Include and pass to the AI agent as part of the PRP
+### Critical Context to Include and pass to the AI agent as part of the PLAN
 
 - **Documentation**: Context7 or URL references with specific topics (e.g., `context7: next.js topic: App Router` or `https://nextjs.org/docs/app/building-your-application/routing/app-router`)
 - **Code Examples**: Real snippets from codebase showing TypeScript patterns
@@ -42,7 +42,7 @@ Using planning/templates/prp-base.template.md as template:
 - Start with pseudocode showing TypeScript/React approach
 - Reference real files for patterns
 - Include error handling strategy
-- List tasks to be completed to fulfill the PRP in the order they should be completed
+- List tasks to be completed to fulfill the PLAN in the order they should be completed
 
 ### Validation Gates (Must be Executable) eg for Next.js
 
@@ -61,13 +61,13 @@ npm run screenshots -- Feature
 npm run test:build
 ```
 
-**_ CRITICAL AFTER YOU ARE DONE RESEARCHING AND EXPLORING THE CODEBASE BEFORE YOU START WRITING THE PRP _**
+**_ CRITICAL AFTER YOU ARE DONE RESEARCHING AND EXPLORING THE CODEBASE BEFORE YOU START WRITING THE PLAN _**
 
-**_ ULTRATHINK ABOUT THE PRP AND PLAN YOUR APPROACH THEN START WRITING THE PRP _**
+**_ ULTRATHINK ABOUT THE PLAN AND PLAN YOUR APPROACH THEN START WRITING THE PLAN _**
 
 ## Output
 
-Save as: `planning/prps/{feature-name}.prp.md`
+Save as: `planning/PLANs/{feature-name}.PLAN.md`
 
 ## Quality Checklist
 
@@ -80,6 +80,6 @@ Save as: `planning/prps/{feature-name}.prp.md`
 - [ ] Component size limits considered (150 lines max)
 - [ ] Real-time features considered if using Convex
 
-Score the PRP on a scale of 1-10 (confidence level to succeed in one-pass implementation using claude codes)
+Score the PLAN on a scale of 1-10 (confidence level to succeed in one-pass implementation using claude codes)
 
 Remember: The goal is one-pass implementation success through comprehensive context.

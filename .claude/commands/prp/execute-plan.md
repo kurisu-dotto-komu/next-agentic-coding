@@ -1,16 +1,16 @@
-# Execute BASE PRP
+# Execute BASE PLAN
 
-Implement a feature using using the PRP file.
+Implement a feature using using the PLAN file.
 
-## PRP File: $ARGUMENTS
+## PLAN File: $ARGUMENTS
 
 ## Execution Process
 
-1. **Load PRP**
-   - Read the specified PRP file
+1. **Load PLAN**
+   - Read the specified PLAN file
    - Understand all context and requirements
-   - Follow all instructions in the PRP and extend the research if needed
-   - Ensure you have all needed context to implement the PRP fully
+   - Follow all instructions in the PLAN and extend the research if needed
+   - Ensure you have all needed context to implement the PLAN fully
    - Do more web searches and codebase exploration as needed
 
 2. **ULTRATHINK**
@@ -20,7 +20,7 @@ Implement a feature using using the PRP file.
    - Identify implementation patterns from existing code to follow.
 
 3. **Execute the plan**
-   - Execute the PRP
+   - Execute the PLAN
    - Use TDD approach to write failing tests first, then implement the code
    - Run the quickfix command frequtnly as you develop to fix linting, formatting, and type errors
    - Run specific tests to check for failures as you implement the code and fix them
@@ -34,9 +34,9 @@ Implement a feature using using the PRP file.
    - Ensure all checklist items done
    - Run final validation suite
    - Report completion status
-   - Read the PRP again to ensure you have implemented everything
+   - Read the PLAN again to ensure you have implemented everything
 
-6. **Reference the PRP**
-   - You can always reference the PRP again if needed
+6. **Reference the PLAN**
+   - You can always reference the PLAN again if needed
 
-Note: If validation fails, use error patterns in PRP to fix and retry.
+Note: If validation fails, use error patterns in PLAN to fix and retry.
