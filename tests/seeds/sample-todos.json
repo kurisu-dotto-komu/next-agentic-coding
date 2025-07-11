@@ -1,0 +1,29 @@
+{
+  "todos": [
+    {
+      "_id": "1",
+      "text": "Buy groceries",
+      "isCompleted": false
+    },
+    {
+      "_id": "2",
+      "text": "Walk the dog",
+      "isCompleted": true
+    },
+    {
+      "_id": "3",
+      "text": "Write tests",
+      "isCompleted": false
+    },
+    {
+      "_id": "4",
+      "text": "Review PRs",
+      "isCompleted": false
+    },
+    {
+      "_id": "5",
+      "text": "Deploy to production",
+      "isCompleted": true
+    }
+  ]
+}

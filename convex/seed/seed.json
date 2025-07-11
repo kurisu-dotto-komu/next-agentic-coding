@@ -1,0 +1,29 @@
+{
+  "todos": [
+    {
+      "_id": "default1",
+      "text": "Welcome to your Todo App! 🎉",
+      "isCompleted": false
+    },
+    {
+      "_id": "default2",
+      "text": "Try adding a new todo above",
+      "isCompleted": false
+    },
+    {
+      "_id": "default3",
+      "text": "Click the checkbox to mark as complete",
+      "isCompleted": true
+    },
+    {
+      "_id": "default4",
+      "text": "Click delete to remove a todo",
+      "isCompleted": false
+    },
+    {
+      "_id": "default5",
+      "text": "All changes sync in real-time! ⚡",
+      "isCompleted": false
+    }
+  ]
+}

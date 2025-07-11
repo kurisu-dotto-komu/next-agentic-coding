@@ -1,0 +1,19 @@
+{
+  "todos": [
+    {
+      "_id": "j5752pymghpghkcwpvzq3m3sad7kg2gn",
+      "isCompleted": true,
+      "text": "Finish project"
+    },
+    {
+      "_id": "j57ccb2pfxpct43b3gvyhkgz517kgcay",
+      "isCompleted": true,
+      "text": "Submit report"
+    },
+    {
+      "_id": "j579fpkkx0vsewh6fdz2gbw0757kh899",
+      "isCompleted": true,
+      "text": "Clean workspace"
+    }
+  ]
+}

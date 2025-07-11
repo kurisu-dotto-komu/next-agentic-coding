@@ -6,15 +6,19 @@
     "dev": "next dev --turbopack --port ${APP_PORT:-3000}",
     "build": "next build",
     "start": "next start",
+    "format": "prettier --log-level=error --write .",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
-    "format": "prettier --log-level=error --write .",
     "knip": "knip",
     "format-lint": "npm-run-all -s format lint",
     "quickfix": "npm-run-all -p format-lint typecheck knip",
     "test": "playwright test --project=main",
     "test:build": "TEST_MODE=build playwright test --project=main",
     "screenshots": "playwright test --project=screenshots",
+    "convex:dev": "convex dev",
+    "convex:seed": "tsx scripts/import-seed.ts seed",
+    "seed:export": "tsx scripts/export-seed.ts",
+    "seed:import": "tsx scripts/import-seed.ts",
     "yolo": "claude --dangerously-skip-permissions"
   },
   "dependencies": {
@@ -32,6 +36,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "dotenv": "^17.2.0",
     "eslint": "^9",
     "eslint-config-next": "15.3.3",
     "eslint-config-prettier": "^10.1.5",
@@ -40,6 +45,7 @@
     "prettier": "^3.6.2",
     "prettier-plugin-tailwindcss": "^0.6.14",
     "tailwindcss": "^4",
+    "tsx": "^4.20.3",
     "typescript": "^5"
   }
 }

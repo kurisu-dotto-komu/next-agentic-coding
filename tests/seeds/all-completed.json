@@ -1,0 +1,19 @@
+{
+  "todos": [
+    {
+      "_id": "1",
+      "text": "Finish project",
+      "isCompleted": true
+    },
+    {
+      "_id": "2",
+      "text": "Submit report",
+      "isCompleted": true
+    },
+    {
+      "_id": "3",
+      "text": "Clean workspace",
+      "isCompleted": true
+    }
+  ]
+}
