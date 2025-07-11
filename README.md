@@ -4,9 +4,25 @@ Basic `create-next-app` boilerplate with some additional Agentic Engineering fea
 
 It is recommended to run this project within it's [Devcontainer](./.devcontainer/devcontainer.json).
 
+## Useful Scripts
+
+- `npm run yolo` for `claude --dangerously-skip-permissions`
+- `npx claude` for regular claude
+- `npm run quickfix` runs validation scripts (formatting, linting, typechecking, and unused dependency checking)
+- `npm run test` runs E2E tests
+- `npm run test:build` runs E2E tests in build mode
+- `npm run screenshots` runs screenshot tests
+- `./worktrees-setup.sh` for worktree management
+- Claude Slash Commands
+  - [PRP Generate](./.claude/commands/prps/generate-prp.md)
+  - [PRP Execute](./.claude/commands/prps/execute-prp.md)
+  - [Cursor Rules Sync](./.claude/commands/cursor-rules-sync.md)
+  - [Code Review](./.claude/commands/code-review.md)
+  - [Update README](./.claude/commands/update-readme.md)
+
 ## Key Technologies
 
-- **Next.js 15.3.3** with Turbopack
+- **Next.js 15** with Turbopack
 - **React 19**
 - **Convex** for backend/database operations
 - **Playwright** for E2E testing
@@ -34,8 +50,3 @@ Claude is the main Agentic Engine. It is configured to use the following tools a
 - [Convex MCP](./.mcp.json) for backend/database operations
 - [CLAUDE.md Rules](./.claude/CLAUDE.md)
 - `npm run yolo` for `claude --dangerously-skip-permissions`
-- Add Claude Slash Commands
-  - [Worktree Flow](./.claude/commands/worktrees)
-  - [Cursor Rules Sync](./.claude/commands/cursor-rules-sync.md) (ran once)
-  - [Code Review](./.claude/commands/code-review.md)
-  - [Update README](./.claude/commands/update-readme.md)
