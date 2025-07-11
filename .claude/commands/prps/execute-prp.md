@@ -21,7 +21,9 @@ Implement a feature using using the PRP file.
 
 3. **Execute the plan**
    - Execute the PRP
-   - Implement all the code
+   - Use TDD approach to write failing tests first, then implement the code
+   - Run the quickfix command frequtnly as you develop to fix linting, formatting, and type errors
+   - Run specific tests to check for failures as you implement the code and fix them
 
 4. **Validate**
    - Run each validation command

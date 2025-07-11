@@ -32,7 +32,7 @@ Using PRPs/templates/prp_base.md as template:
 
 ### Critical Context to Include and pass to the AI agent as part of the PRP
 
-- **Documentation**: Context7 references with specific topics (e.g., `context7: next.js topic: App Router`)
+- **Documentation**: Context7 or URL references with specific topics (e.g., `context7: next.js topic: App Router` or `https://nextjs.org/docs/app/building-your-application/routing/app-router`)
 - **Code Examples**: Real snippets from codebase showing TypeScript patterns
 - **Gotchas**: Library quirks, Server Component limitations, 'use client' requirements
 - **Patterns**: Existing approaches to follow (export default function, @/ imports)
@@ -53,6 +53,10 @@ npm run quickfix
 # E2E Tests
 npm run test
 
+# Screenshot Iteration
+# iterate until no visual issues are found
+npm run screenshots -- Feature
+
 # Build Verification
 npm run test:build
 ```
@@ -63,7 +67,7 @@ npm run test:build
 
 ## Output
 
-Save as: `PRPs/{feature-name}.md`
+Save as: `planning/prps/{feature-name}.prp.md`
 
 ## Quality Checklist
 
@@ -73,7 +77,7 @@ Save as: `PRPs/{feature-name}.md`
 - [ ] Clear implementation path with TypeScript
 - [ ] Error handling documented
 - [ ] Follows all CLAUDE.md conventions
-- [ ] Component size limits considered (120 lines max)
+- [ ] Component size limits considered (150 lines max)
 - [ ] Real-time features considered if using Convex
 
 Score the PRP on a scale of 1-10 (confidence level to succeed in one-pass implementation using claude codes)

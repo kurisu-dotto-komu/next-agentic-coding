@@ -1,14 +1,12 @@
 ### 🔄 Project Awareness & Context
 
-- **Always read `INITIAL.md`** at the start of a new conversation to understand the project's architecture, goals, style, and constraints.
-- **Check `TASK.md`** before starting a new task. If the task isn't listed, add it with a brief description and today's date.
 - **Use consistent naming conventions, file structure, and architecture patterns**
 - **We are running Next.js dev server on port 3000** - never start your own next.js dev server.
 - **We are running a Convex dev server, which will automatically generate generated convex api files** - never start your own convex dev server.
 
 ### 🧱 Code Structure & Modularity
 
-- **Never create a file longer than 120 lines of code.** If a file approaches this limit, refactor by splitting it into modules or helper files.
+- **Never create a file longer than 150 lines of code.** If a file approaches this limit, refactor by splitting it into modules or helper files.
 - **Organize code into clearly separated modules**, grouped by feature or responsibility.
   For Next.js this looks like:
   - Components in `/components` or colocated with routes
