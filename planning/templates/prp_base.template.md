@@ -1,4 +1,4 @@
-name: "Base PRP Template v2 - Context-Rich with Validation Loops"
+name: "Base PRP Template v3 - Context-Rich with Validation Loops"
 description: |
 
 ## Purpose
@@ -46,12 +46,16 @@ Template optimized for AI agents to implement features with sufficient context a
 - file: [path/to/component.tsx]
   why: [Pattern to follow, gotchas to avoid]
 
+- doc: [Library documentation URL] 
+  section: [Specific section about common pitfalls]
+  critical: [Key insight that prevents common errors]
+
 - context7: [library-name]
   topic: [Specific topic about common pitfalls]
   critical: [Key insight that prevents common errors]
 
-- docfile: [PRPs/ai_docs/file.md]
-  why: [docs that the user has pasted in to the project]
+- docfile: [planning/ideas/idea/file.md]
+  why: [docs that the user has pasted in to the idea folder]
 ```
 
 ### Current Codebase tree (run `tree` in the root of the project) to get an overview of the codebase
