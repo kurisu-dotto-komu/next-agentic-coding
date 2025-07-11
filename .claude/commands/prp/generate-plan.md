@@ -67,7 +67,7 @@ npm run test:build
 
 ## Output
 
-Save as: `planning/PLANs/{feature-name}.PLAN.md`
+Save as: `prp/plans/{feature-name}.plan.md`
 
 ## Quality Checklist
 
@@ -83,3 +83,7 @@ Save as: `planning/PLANs/{feature-name}.PLAN.md`
 Score the PLAN on a scale of 1-10 (confidence level to succeed in one-pass implementation using claude codes)
 
 Remember: The goal is one-pass implementation success through comprehensive context.
+
+After writing the `plan.md` file, your job is done.
+
+DO NOT EXECUTE THE PLAN!
