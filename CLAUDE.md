@@ -31,11 +31,6 @@
 - **Use `npm run quickfix`** frequently (runs `eslint`, `tsc`, and `prettier`).
 - **Use `npm run test:build`** at the end of big tasks to check the build.
 
-### ✅ Task Completion
-
-- **Mark completed tasks in `TASK.md`** immediately after finishing them.
-- Add new sub-tasks or TODOs discovered during development to `TASK.md` under a "Discovered During Work" section.
-
 ### 📎 Style & Conventions
 
 - **Always use TypeScript**, never JavaScript.
@@ -56,7 +51,6 @@
 - **Never assume missing context. Ask questions if uncertain.**
 - **Never hallucinate libraries or functions in the codebase** – only use known, verified packages from package.json.
 - **Always confirm file paths and module names** exist before referencing them in code or tests.
-- **Never delete or overwrite existing code** unless explicitly instructed to or if part of a task from `TASK.md`.
 - **Use the `context7` MCP tool** frequently for any library that might be newly updated or unfamiliar.
 - **Use the `playwright` MCP tool** for DOM inspection and visual debugging.
 - **Don't make git commits** unless explicitly instructed.
