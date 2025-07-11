@@ -176,7 +176,7 @@ ROUTES:
 ```typescript
 // Tests will fail before code is written; no need to actually run the tests yet, but they will guide development
 // CREATE tests/e2e/new-feature.spec.ts with these test cases:
-import { test, expect } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 
 test("happy path functionality", async ({ page }) => {
   await page.goto("/feature");

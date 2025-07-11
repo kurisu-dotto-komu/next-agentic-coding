@@ -586,7 +586,8 @@ npm run quickfix              # Runs ESLint, TypeScript, Prettier
 
 ```typescript
 // CREATE tests/e2e/character.spec.ts with these test cases:
-import { test, expect } from "@playwright/test";
+import { expect, test } from "@playwright/test";
+
 import { ROUTES } from "../test-helpers";
 
 test("character creation flow", async ({ page }) => {

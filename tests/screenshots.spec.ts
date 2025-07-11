@@ -1,19 +1,16 @@
-import { test } from "@playwright/test";
-import { ROUTES, SCREENSHOT_DIR } from "./test-helpers";
+import { type Page, test } from "@playwright/test";
 
-test.describe("Screenshot all routes", () => {
-  for (const [routeName, routePath] of Object.entries(ROUTES)) {
-    test(`screenshot ${routeName} page`, async ({ page }) => {
-      await page.goto(routePath);
+async function takeScreenshot(page: Page, path: string, name: string) {
+  await page.goto(path);
+  await page.waitForLoadState("networkidle");
+  await page.screenshot({
+    path: `tests/screenshots/${name}.png`,
+    fullPage: true,
+  });
+}
 
-      // Wait for the page to be fully loaded
-      await page.waitForLoadState("networkidle");
-
-      // Take a full page screenshot
-      await page.screenshot({
-        path: `${SCREENSHOT_DIR}/${routeName}-full.png`,
-        fullPage: true,
-      });
-    });
-  }
+test.describe("Screenshots: Homepage", () => {
+  test("Home Page", async ({ page }) => {
+    await takeScreenshot(page, "/", "home");
+  });
 });

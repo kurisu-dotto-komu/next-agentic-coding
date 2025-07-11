@@ -185,6 +185,10 @@ Create a real-time voting application with:
 ### Data models and structure
 
 ```typescript
+// convex/schema.ts
+import { defineSchema, defineTable } from "convex/server";
+import { v } from "convex/values";
+
 // types/vote.ts
 export interface User {
   _id: string;
@@ -200,10 +204,6 @@ export interface Vote {
   vote: "O" | "X" | null;
   timestamp: number;
 }
-
-// convex/schema.ts
-import { defineSchema, defineTable } from "convex/server";
-import { v } from "convex/values";
 
 export default defineSchema({
   users: defineTable({
@@ -486,7 +486,8 @@ npm run quickfix              # Runs ESLint, TypeScript, Prettier
 
 ```typescript
 // VERIFY tests/e2e/vote-mobile.spec.ts (created in Task 4)
-import { test, expect } from "@playwright/test";
+import { expect, test } from "@playwright/test";
+
 import { ROUTES } from "../test-helpers";
 
 test("mobile user gets unique avatar", async ({ page }) => {
@@ -527,9 +528,7 @@ test("desktop shows all users", async ({ page }) => {
   await page2.goto(ROUTES.vote);
 
   // Check both users appear on desktop
-  const userAvatars = page
-    .getByTestId("user-grid")
-    .locator('[data-testid="grid-avatar"]');
+  const userAvatars = page.getByTestId("user-grid").locator('[data-testid="grid-avatar"]');
   await expect(userAvatars).toHaveCount(2);
 });
 

@@ -1,0 +1,14 @@
+{
+  "printWidth": 100,
+  "importOrder": [
+    "^.+\\.css$",
+    "^react$",
+    "<THIRD_PARTY_MODULES>",
+    "^#/(?!components/)(.*)$",
+    "^#/components/(.*)$",
+    "^[./]"
+  ],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true,
+  "plugins": ["@trivago/prettier-plugin-sort-imports", "prettier-plugin-tailwindcss"]
+}

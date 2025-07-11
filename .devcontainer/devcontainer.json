@@ -3,6 +3,9 @@
   "build": {
     "dockerfile": "Dockerfile"
   },
+  // your host machine must have a .claude folder -- it can be empty
+  // we use this to share claude auth keys with the container
+  // disable it if you want, but you'll need to log into claude in each container manually
   "mounts": ["source=${env:HOME}/.claude,target=/home/node/.claude,type=bind"],
   "remoteEnv": {
     "CLAUDE_CONFIG_DIR": "/home/node/.claude"
