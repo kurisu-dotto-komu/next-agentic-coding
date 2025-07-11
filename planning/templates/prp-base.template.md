@@ -40,17 +40,15 @@ Template optimized for AI agents to implement features with sufficient context a
 ```yaml
 # MUST READ - Use Context7 MCP tool for library documentation
 - context7: [library-name]
+  doc: [Library documentation URL]
   topic: [Specific sections/methods you'll need]
   why: [Key patterns and APIs needed]
 
 - file: [path/to/component.tsx]
   why: [Pattern to follow, gotchas to avoid]
 
-- doc: [Library documentation URL]
-  section: [Specific section about common pitfalls]
-  critical: [Key insight that prevents common errors]
-
 - context7: [library-name]
+  doc: [Library documentation URL]
   topic: [Specific topic about common pitfalls]
   critical: [Key insight that prevents common errors]
 
@@ -77,7 +75,7 @@ Template optimized for AI agents to implement features with sufficient context a
 // Example: Next.js requires 'use client' for interactive components
 // Example: Convex mutations have 16KB argument size limit
 // Example: Server Components can't use hooks or browser APIs
-// Example: Keep components under 120 lines - split if larger
+// Example: Keep components under 150 lines - split if larger
 ```
 
 ## Implementation Blueprint
@@ -269,7 +267,7 @@ npm run test:build -- tests/e2e/new-feature.spec.ts
 - [ ] No visual issues for any screenshot files: `npm run screenshots`
 - [ ] Build succeeds: `npm run test:build`
 - [ ] TypeScript types are comprehensive; no `any` or `unknown`
-- [ ] Components stay under 120 lines; split if larger
+- [ ] Components stay under 150 lines; split if larger
 - [ ] Real-time features work without refresh
 - [ ] Error cases handled gracefully
 - [ ] Follows all CLAUDE.md conventions
@@ -280,7 +278,7 @@ npm run test:build -- tests/e2e/new-feature.spec.ts
 
 - ❌ Don't use JavaScript - always TypeScript
 - ❌ Don't use named exports for components
-- ❌ Don't create files over 120 lines
+- ❌ Don't create files over 150 lines
 - ❌ Don't use relative imports with ../
 - ❌ Don't call npx directly - use npm run
 - ❌ Don't forget 'use client' for interactive components
