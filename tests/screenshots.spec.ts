@@ -31,22 +31,42 @@ test.describe("Screenshots: Landing Page", () => {
   });
 });
 
-test.describe("Screenshots: Todo App", () => {
+test.describe("Screenshots: Tamagochi App", () => {
   test("Empty State", async ({ page }) => {
     // Load empty seed to ensure clean state
     await loadSeed("empty");
-    await takeScreenshot(page, "/todo", "todo-empty");
+    await takeScreenshot(page, "/tamagochi", "tamagochi-empty");
   });
 
-  test("Mixed Todos State", async ({ page }) => {
-    // Load sample todos with mix of completed and uncompleted
-    await loadSeed("sample-todos");
-    await takeScreenshot(page, "/todo", "todo-mixed");
+  test("Active Tamagochis", async ({ page }) => {
+    // Load sample tamagochis
+    await loadSeed("sample-tamagochis");
+    await takeScreenshot(page, "/tamagochi", "tamagochi-active");
   });
 
-  test("Default Welcome State", async ({ page }) => {
-    // Load default seed with welcome messages
-    await loadSeed("seed");
-    await takeScreenshot(page, "/todo", "todo-welcome");
+  test("User with Tamagochi", async ({ page }) => {
+    // Load sample tamagochis first
+    await loadSeed("sample-tamagochis");
+
+    // Navigate to the page first
+    await page.goto("/tamagochi");
+
+    // Set user ID after navigation
+    await page.evaluate(() => {
+      localStorage.setItem("tamagochi-user-id", "user-test-1");
+    });
+
+    // Reload to pick up the localStorage change
+    await page.reload();
+
+    // Wait for content to load
+    await page.waitForTimeout(500);
+
+    // Take screenshot without navigating again
+    await page.waitForLoadState("networkidle");
+    await page.screenshot({
+      path: `tests/screenshots/tamagochi-user.png`,
+      fullPage: true,
+    });
   });
 });

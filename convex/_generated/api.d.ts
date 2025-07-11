@@ -13,8 +13,9 @@ import type {
   FilterApi,
   FunctionReference,
 } from "convex/server";
+import type * as crons from "../crons.js";
 import type * as seed from "../seed.js";
-import type * as todos from "../todos.js";
+import type * as tamagochis from "../tamagochis.js";
 
 /**
  * A utility for referencing Convex functions in your app's API.
@@ -25,8 +26,9 @@ import type * as todos from "../todos.js";
  * ```
  */
 declare const fullApi: ApiFromModules<{
+  crons: typeof crons;
   seed: typeof seed;
-  todos: typeof todos;
+  tamagochis: typeof tamagochis;
 }>;
 export declare const api: FilterApi<
   typeof fullApi,

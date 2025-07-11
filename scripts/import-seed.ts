@@ -45,7 +45,8 @@ async function importSeed(seedName: string) {
     // Show relative path from project root
     const relativePath = path.relative(path.join(__dirname, ".."), seedPath);
     console.log(`✅ Imported seed data from: ${relativePath}`);
-    console.log(`   - ${result.imported} todos imported`);
+    console.log(`   - ${result.importedTodos} todos imported`);
+    console.log(`   - ${result.importedTamagochis} tamagochis imported`);
   } catch (error) {
     console.error("Error importing seed:", error);
     process.exit(1);

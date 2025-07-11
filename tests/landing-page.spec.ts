@@ -13,20 +13,20 @@ test.describe("Landing Page", () => {
     await expect(page.getByText("Welcome to our Next.js application")).toBeVisible();
   });
 
-  test("should have link to todo page", async ({ page }) => {
-    const todoLink = page.getByRole("link", { name: "Go to Todo List" });
-    await expect(todoLink).toBeVisible();
-    await expect(todoLink).toHaveAttribute("href", "/todo");
+  test("should have link to tamagochi page", async ({ page }) => {
+    const tamagochiLink = page.getByRole("link", { name: "Go to Tamagochi World" });
+    await expect(tamagochiLink).toBeVisible();
+    await expect(tamagochiLink).toHaveAttribute("href", "/tamagochi");
   });
 
-  test("should navigate to todo page when link is clicked", async ({ page }) => {
-    await page.getByRole("link", { name: "Go to Todo List" }).click();
+  test("should navigate to tamagochi page when link is clicked", async ({ page }) => {
+    await page.getByRole("link", { name: "Go to Tamagochi World" }).click();
 
     // Wait for navigation
-    await page.waitForURL("/todo");
+    await page.waitForURL("/tamagochi");
 
-    // Verify we're on the todo page
-    await expect(page.getByRole("heading", { name: "Todo List" })).toBeVisible();
+    // Verify we're on the tamagochi page
+    await expect(page.getByRole("heading", { name: "Multiplayer Tamagochi" })).toBeVisible();
   });
 
   test("should have centered content", async ({ page }) => {
@@ -37,7 +37,7 @@ test.describe("Landing Page", () => {
   });
 
   test("should have proper styling on button", async ({ page }) => {
-    const button = page.getByRole("link", { name: "Go to Todo List" });
+    const button = page.getByRole("link", { name: "Go to Tamagochi World" });
 
     // Check for blue background
     await expect(button).toHaveClass(/bg-blue-500/);

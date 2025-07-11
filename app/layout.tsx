@@ -5,8 +5,8 @@ import type { Metadata } from "next";
 import Providers from "@/app/components/Providers";
 
 export const metadata: Metadata = {
-  title: "Todo App",
-  description: "A simple todo app with Convex",
+  title: "Tamagochi World",
+  description: "A multiplayer virtual pet game with Convex",
 };
 
 export default function RootLayout({

@@ -7,10 +7,10 @@ export default function Home() {
         <h1 className="mb-8 text-6xl font-bold">Hello! 👋</h1>
         <p className="mb-8 text-xl text-gray-600">Welcome to our Next.js application</p>
         <Link
-          href="/todo"
+          href="/tamagochi"
           className="inline-block rounded-lg bg-blue-500 px-8 py-3 text-lg text-white transition-colors hover:bg-blue-600"
         >
-          Go to Todo List
+          Go to Tamagochi World
         </Link>
       </div>
     </div>
