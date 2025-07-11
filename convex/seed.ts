@@ -8,9 +8,10 @@ export const exportData = query({
   handler: async (ctx) => {
     const todos = await ctx.db.query("todos").collect();
     return {
-      todos: todos.map(({ _creationTime, ...todo }) => ({
-        ...todo,
+      todos: todos.map((todo) => ({
         _id: todo._id.toString(),
+        text: todo.text,
+        isCompleted: todo.isCompleted,
       })),
     };
   },

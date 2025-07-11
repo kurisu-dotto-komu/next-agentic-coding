@@ -8,7 +8,7 @@ test.describe("Todo App", () => {
   // Default to empty state for most tests
   test.beforeEach(async ({ page }) => {
     await loadSeed("empty");
-    await page.goto("/");
+    await page.goto("/todo");
   });
 
   test("should display the todo app title", async ({ page }) => {
@@ -129,7 +129,7 @@ test.describe("Todo App with default seed", () => {
   test("should display default welcome todos", async ({ page }) => {
     // Load the default seed
     await loadSeed("seed");
-    await page.goto("/");
+    await page.goto("/todo");
 
     // Check all welcome todos are visible
     await expect(page.getByText("Welcome to your Todo App! 🎉")).toBeVisible();
@@ -156,7 +156,7 @@ test.describe("Todo App with existing data", () => {
   test("should display pre-seeded todos", async ({ page }) => {
     // Load sample todos
     await loadSeed("sample-todos");
-    await page.goto("/");
+    await page.goto("/todo");
 
     // Check that all seeded todos are visible
     await expect(page.getByText("Buy groceries")).toBeVisible();
@@ -180,7 +180,7 @@ test.describe("Todo App with existing data", () => {
   test("should work with all completed todos", async ({ page }) => {
     // Load all completed todos
     await loadSeed("all-completed");
-    await page.goto("/");
+    await page.goto("/todo");
 
     // Check that all todos are visible and completed
     const todos = ["Finish project", "Submit report", "Clean workspace"];
