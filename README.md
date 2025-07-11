@@ -20,6 +20,15 @@ It is recommended to run this project within it's [Devcontainer](./.devcontainer
   - [Code Review](./.claude/commands/code-review.md)
   - [Update README](./.claude/commands/update-readme.md)
 
+## Using the PRP System
+
+The PRP (Plan, Review, Proceed) system helps you manage development tasks efficiently:
+
+1. **Add your idea** to `planning/ideas/foo.idea.md`
+2. **Generate a PRP** in yolo mode with `/prp-generate foo.idea.md`
+3. **Review and modify** the generated PRP in `planning/prps/foo.prp.md`
+4. **Execute the PRP** with `/prp-execute foo.prp.md`
+
 ## Key Technologies
 
 - **Next.js 15** with Turbopack
