@@ -4,8 +4,8 @@
     "^.+\\.css$",
     "^react$",
     "<THIRD_PARTY_MODULES>",
-    "^#/(?!components/)(.*)$",
-    "^#/components/(.*)$",
+    "^@/(?!app/components/)(.*)$",
+    "^@/app/components/(.*)$",
     "^[./]"
   ],
   "importOrderSeparation": true,

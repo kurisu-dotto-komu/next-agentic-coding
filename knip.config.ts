@@ -5,7 +5,6 @@ const config: KnipConfig = {
 
   // Ignore false positives - these are actually used
   ignoreDependencies: [
-    "convex",
     "eslint",
     "eslint-config-next",
     "eslint-config-prettier",
