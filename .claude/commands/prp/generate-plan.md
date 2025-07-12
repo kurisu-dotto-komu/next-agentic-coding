@@ -28,7 +28,7 @@ The AI agent only gets the context you are appending to the PLAN and training da
 
 ## PLAN Generation
 
-Using `prp/templates/plan-base.template.md` as template:
+Using `prp/templates/plan-base.template.md` as template, and `prp/templates/plan-example.template.md` as an example PLAN:
 
 ### Critical Context to Include and pass to the AI agent as part of the PLAN
 
@@ -42,6 +42,7 @@ Using `prp/templates/plan-base.template.md` as template:
 - Start with pseudocode showing TypeScript/React approach
 - Reference real files for patterns
 - Include error handling strategy
+- Include validation loop steps
 - List tasks to be completed to fulfill the PLAN in the order they should be completed
 
 ### Validation Gates (Must be Executable) eg for Next.js
