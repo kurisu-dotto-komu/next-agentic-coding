@@ -39,6 +39,6 @@ N/A - research as needed.
 
 ## OTHER CONSIDERATIONS:
 
-Find a library online for character generation.
-Use a local convex dev server for development.
-Clean up the existing next boilerplate, this feature will appear on the landing page.
+Use the dicebear library for character generation.
+Use the existing local convex dev server for development.
+Clean up the existing next boilerplate and todos app; this feature will appear on the landing page.
