@@ -2,47 +2,87 @@ import { v } from "convex/values";
 
 import { mutation, query } from "./_generated/server";
 
-// Export all todos data
+// Export all voting app data
 export const exportData = query({
   args: {},
   handler: async (ctx) => {
-    const todos = await ctx.db.query("todos").collect();
+    const users = await ctx.db.query("users").collect();
+    const votes = await ctx.db.query("votes").collect();
     return {
-      todos: todos.map((todo) => ({
-        _id: todo._id.toString(),
-        text: todo.text,
-        isCompleted: todo.isCompleted,
+      users: users.map((user) => ({
+        _id: user._id.toString(),
+        sessionId: user.sessionId,
+        avatarSeed: user.avatarSeed,
+        createdAt: user.createdAt,
+        lastSeen: user.lastSeen,
+      })),
+      votes: votes.map((vote) => ({
+        _id: vote._id.toString(),
+        userId: vote.userId.toString(),
+        vote: vote.vote,
+        updatedAt: vote.updatedAt,
       })),
     };
   },
 });
 
-// Import todos data
+// Import voting app data
 export const importData = mutation({
   args: {
-    todos: v.array(
-      v.object({
-        _id: v.string(),
-        text: v.string(),
-        isCompleted: v.boolean(),
-      }),
+    users: v.optional(
+      v.array(
+        v.object({
+          _id: v.string(),
+          sessionId: v.string(),
+          avatarSeed: v.string(),
+          createdAt: v.number(),
+          lastSeen: v.number(),
+        }),
+      ),
+    ),
+    votes: v.optional(
+      v.array(
+        v.object({
+          _id: v.string(),
+          userId: v.string(),
+          vote: v.union(v.literal("O"), v.literal("X"), v.null()),
+          updatedAt: v.number(),
+        }),
+      ),
     ),
   },
   handler: async (ctx, args) => {
-    // Clear existing todos first
-    const existingTodos = await ctx.db.query("todos").collect();
-    await Promise.all(existingTodos.map((todo) => ctx.db.delete(todo._id)));
+    // Clear existing data first
+    const existingUsers = await ctx.db.query("users").collect();
+    const existingVotes = await ctx.db.query("votes").collect();
 
-    // Import new todos (without _id, as Convex will create new ones)
-    await Promise.all(
-      args.todos.map((todo) =>
-        ctx.db.insert("todos", {
-          text: todo.text,
-          isCompleted: todo.isCompleted,
-        }),
-      ),
-    );
+    await Promise.all(existingUsers.map((user) => ctx.db.delete(user._id)));
+    await Promise.all(existingVotes.map((vote) => ctx.db.delete(vote._id)));
 
-    return { imported: args.todos.length };
+    // Import new data
+    let importedUsers = 0;
+    let importedVotes = 0;
+
+    if (args.users) {
+      await Promise.all(
+        args.users.map((user) =>
+          ctx.db.insert("users", {
+            sessionId: user.sessionId,
+            avatarSeed: user.avatarSeed,
+            createdAt: user.createdAt,
+            lastSeen: user.lastSeen,
+          }),
+        ),
+      );
+      importedUsers = args.users.length;
+    }
+
+    if (args.votes) {
+      // Note: We're skipping vote imports since they reference user IDs
+      // that would be different after re-import
+      importedVotes = 0;
+    }
+
+    return { importedUsers, importedVotes };
   },
 });

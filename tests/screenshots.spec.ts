@@ -21,32 +21,81 @@ async function takeScreenshot(
   });
 }
 
-test.describe("Screenshots: Landing Page", () => {
-  test("Landing Page", async ({ page }) => {
-    await takeScreenshot(page, "/", "landing-page");
+test.describe("Screenshots: Voting App Default Views", () => {
+  test("Desktop View", async ({ page }) => {
+    await page.setViewportSize({ width: 1920, height: 1080 });
+    await takeScreenshot(page, "/", "voting-desktop-default");
   });
 
-  test("Landing Page Dark Mode", async ({ page }) => {
-    await takeScreenshot(page, "/", "landing-page", "dark");
+  test("Mobile View", async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 667 });
+    await takeScreenshot(page, "/", "voting-mobile-default");
   });
 });
 
-test.describe("Screenshots: Todo App", () => {
-  test("Empty State", async ({ page }) => {
-    // Load empty seed to ensure clean state
+test.describe("Screenshots: Voting App", () => {
+  test("Voting Mobile", async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 667 });
     await loadSeed("empty");
-    await takeScreenshot(page, "/todo", "todo-empty");
+    await takeScreenshot(page, "/", "voting-mobile");
   });
 
-  test("Mixed Todos State", async ({ page }) => {
-    // Load sample todos with mix of completed and uncompleted
-    await loadSeed("sample-todos");
-    await takeScreenshot(page, "/todo", "todo-mixed");
+  test("Voting Mobile Active", async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 667 });
+    await loadSeed("empty");
+    await page.goto("/");
+    await page.waitForLoadState("networkidle");
+
+    const oButton = page.getByTestId("vote-button-O");
+    await oButton.dispatchEvent("mousedown");
+    await page.waitForTimeout(500);
+
+    await page.screenshot({
+      path: `tests/screenshots/voting-mobile-active.png`,
+      fullPage: true,
+    });
+
+    await oButton.dispatchEvent("mouseup");
   });
 
-  test("Default Welcome State", async ({ page }) => {
-    // Load default seed with welcome messages
-    await loadSeed("seed");
-    await takeScreenshot(page, "/todo", "todo-welcome");
+  test("Voting Desktop Empty", async ({ page }) => {
+    await page.setViewportSize({ width: 1920, height: 1080 });
+    await loadSeed("empty");
+    await takeScreenshot(page, "/", "voting-desktop-empty");
+  });
+
+  test("Voting Desktop Active", async ({ page, context }) => {
+    await page.setViewportSize({ width: 1920, height: 1080 });
+    await loadSeed("empty");
+    await page.goto("/");
+    await page.waitForLoadState("networkidle");
+
+    // Add some mobile voters
+    const voters = [];
+    for (let i = 0; i < 5; i++) {
+      const mobile = await context.newPage();
+      await mobile.setViewportSize({ width: 375, height: 667 });
+      await mobile.goto("/");
+      voters.push(mobile);
+    }
+
+    await page.waitForTimeout(2000);
+
+    // Have some users vote
+    await voters[0].getByTestId("vote-button-O").dispatchEvent("mousedown");
+    await voters[1].getByTestId("vote-button-X").dispatchEvent("mousedown");
+    await voters[2].getByTestId("vote-button-O").dispatchEvent("mousedown");
+
+    await page.waitForTimeout(1000);
+
+    await page.screenshot({
+      path: `tests/screenshots/voting-desktop-active.png`,
+      fullPage: true,
+    });
+
+    // Clean up
+    for (const voter of voters) {
+      await voter.close();
+    }
   });
 });

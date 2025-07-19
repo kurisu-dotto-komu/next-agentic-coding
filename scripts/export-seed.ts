@@ -32,7 +32,8 @@ async function exportSeed(seedName: string) {
     fs.writeFileSync(seedPath, JSON.stringify(data, null, 2));
 
     console.log(`✅ Exported seed data to: tests/seeds/${seedName}.json`);
-    console.log(`   - ${data.todos.length} todos`);
+    console.log(`   - ${data.users.length} users`);
+    console.log(`   - ${data.votes.length} votes`);
   } catch (error) {
     console.error("Error exporting seed:", error);
     process.exit(1);

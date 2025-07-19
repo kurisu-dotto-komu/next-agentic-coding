@@ -1,49 +1,56 @@
 import { expect, test } from "@playwright/test";
 
-test.describe("Landing Page", () => {
-  test.beforeEach(async ({ page }) => {
+test.describe("Landing Page - Voting App", () => {
+  test("desktop view shows correct elements", async ({ page }) => {
+    await page.setViewportSize({ width: 1920, height: 1080 });
     await page.goto("/");
+
+    await expect(page.getByRole("heading", { name: "Live Voting Session" })).toBeVisible();
+    await expect(page.getByTestId("qr-code")).toBeVisible();
+    await expect(page.getByTestId("vote-bar")).toBeVisible();
+    await expect(page.getByText("Waiting for participants to join...")).toBeVisible();
   });
 
-  test("should display hello banner", async ({ page }) => {
-    await expect(page.getByRole("heading", { name: "Hello! 👋" })).toBeVisible();
+  test("mobile view shows voting interface", async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 667 });
+    await page.goto("/");
+
+    await expect(page.getByTestId("user-avatar")).toBeVisible();
+    await expect(page.getByTestId("vote-button-O")).toBeVisible();
+    await expect(page.getByTestId("vote-button-X")).toBeVisible();
+    await expect(page.getByText("Hold a button to vote!")).toBeVisible();
   });
 
-  test("should display welcome message", async ({ page }) => {
-    await expect(page.getByText("Welcome to our Next.js application")).toBeVisible();
+  test("responsive behavior works correctly", async ({ page }) => {
+    await page.goto("/");
+
+    await page.setViewportSize({ width: 1920, height: 1080 });
+    await expect(page.getByTestId("qr-code")).toBeVisible();
+    await expect(page.getByTestId("vote-button-O")).not.toBeVisible();
+
+    await page.setViewportSize({ width: 375, height: 667 });
+    await expect(page.getByTestId("qr-code")).not.toBeVisible();
+    await expect(page.getByTestId("vote-button-O")).toBeVisible();
   });
 
-  test("should have link to todo page", async ({ page }) => {
-    const todoLink = page.getByRole("link", { name: "Go to Todo List" });
-    await expect(todoLink).toBeVisible();
-    await expect(todoLink).toHaveAttribute("href", "/todo");
+  test("vote buttons have proper styling", async ({ page }) => {
+    await page.setViewportSize({ width: 375, height: 667 });
+    await page.goto("/");
+
+    const oButton = page.getByTestId("vote-button-O");
+    const xButton = page.getByTestId("vote-button-X");
+
+    await expect(oButton.locator("div").first()).toHaveClass(/bg-green-500/);
+    await expect(xButton.locator("div").first()).toHaveClass(/bg-red-500/);
   });
 
-  test("should navigate to todo page when link is clicked", async ({ page }) => {
-    await page.getByRole("link", { name: "Go to Todo List" }).click();
+  test("QR code is positioned correctly", async ({ page }) => {
+    await page.setViewportSize({ width: 1920, height: 1080 });
+    await page.goto("/");
 
-    // Wait for navigation
-    await page.waitForURL("/todo");
-
-    // Verify we're on the todo page
-    await expect(page.getByRole("heading", { name: "Todo List" })).toBeVisible();
-  });
-
-  test("should have centered content", async ({ page }) => {
-    // Check that the main container has centering classes
-    const mainContainer = page.locator(".flex.min-h-screen");
-    await expect(mainContainer).toHaveClass(/items-center/);
-    await expect(mainContainer).toHaveClass(/justify-center/);
-  });
-
-  test("should have proper styling on button", async ({ page }) => {
-    const button = page.getByRole("link", { name: "Go to Todo List" });
-
-    // Check for blue background
-    await expect(button).toHaveClass(/bg-blue-500/);
-
-    // Check hover state by hovering
-    await button.hover();
-    await expect(button).toHaveClass(/hover:bg-blue-600/);
+    const qrCode = page.getByTestId("qr-code");
+    await expect(qrCode).toHaveClass(/fixed/);
+    await expect(qrCode).toHaveClass(/right-4/);
+    await expect(qrCode).toHaveClass(/top-4/);
   });
 });

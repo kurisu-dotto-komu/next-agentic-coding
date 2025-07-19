@@ -1,11 +1,13 @@
 # Tamagochi Feature Implementation Plan
 
 ## Feature Overview
+
 Implement a multiplayer tamagochi game that replaces the existing TODO functionality. The tamagochi is a virtual pet that lives in a 100x100 pixel matrix (scaled to 1024px max), has hunger/happiness/health stats, moves randomly, and requires player interaction to survive. All players interact with the same shared tamagochi in real-time.
 
 ## Research Summary
 
 ### Existing Codebase Structure
+
 - **Main TODO route**: `/app/(routes)/todo/page.tsx` - needs to be replaced
 - **Convex schema**: Currently only has `todos` table - need to create `tamagochis` table
 - **Real-time patterns**: Using `useQuery` and `useMutation` hooks from Convex
@@ -13,6 +15,7 @@ Implement a multiplayer tamagochi game that replaces the existing TODO functiona
 - **Test patterns**: Playwright E2E tests with serial mode, screenshot tests
 
 ### Key Technologies
+
 - **Convex**: Real-time backend with subscriptions (`context7: /context7/convex_dev`)
 - **Next.js App Router**: Client components for interactivity (`context7: /vercel/next.js topic: use client`)
 - **Canvas API**: For pixel art rendering and game display
@@ -21,6 +24,7 @@ Implement a multiplayer tamagochi game that replaces the existing TODO functiona
 ## Implementation Blueprint
 
 ### 1. Update Convex Schema
+
 ```typescript
 // convex/schema.ts
 import { defineSchema, defineTable } from "convex/server";
@@ -41,7 +45,7 @@ export default defineSchema({
     }),
     velocity: v.object({
       x: v.number(),
-      y: v.number(),  
+      y: v.number(),
     }),
     stats: v.object({
       hunger: v.number(), // 0-100
@@ -62,6 +66,7 @@ export default defineSchema({
 ```
 
 ### 2. Pixel Art Generation System
+
 ```typescript
 // app/utils/pixelArt.ts
 interface PixelData {
@@ -75,7 +80,7 @@ export function generateTamagochiSprite(seed: string): string {
   const rng = seedRandom(seed);
   const size = 16; // 16x16 sprite
   const pixels = new Uint8Array(size * size * 4);
-  
+
   // Generate symmetrical creature pattern
   for (let y = 0; y < size; y++) {
     for (let x = 0; x < size / 2; x++) {
@@ -87,13 +92,14 @@ export function generateTamagochiSprite(seed: string): string {
       }
     }
   }
-  
+
   // Convert to base64
   return pixelsToBase64(pixels, size, size);
 }
 ```
 
 ### 3. Game Canvas Component
+
 ```typescript
 // app/components/TamagochiCanvas.tsx
 'use client'
@@ -106,35 +112,35 @@ export default function TamagochiCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const tamagochis = useQuery(api.tamagochis.list)
   const interact = useMutation(api.tamagochis.interact)
-  
+
   useEffect(() => {
     if (!canvasRef.current || !tamagochis) return
-    
+
     const ctx = canvasRef.current.getContext('2d')
     ctx.imageSmoothingEnabled = false // Crisp pixels
-    
+
     // Clear and draw game state
     ctx.clearRect(0, 0, 1024, 1024)
-    
+
     // Draw each tamagochi
     tamagochis.forEach(pet => {
       drawTamagochi(ctx, pet)
     })
   }, [tamagochis])
-  
+
   const handleClick = (e: React.MouseEvent) => {
     // Convert click to game coordinates
     const rect = canvasRef.current!.getBoundingClientRect()
     const x = Math.floor((e.clientX - rect.left) / 10.24)
     const y = Math.floor((e.clientY - rect.top) / 10.24)
-    
+
     // Find clicked tamagochi
     const clicked = findTamagochiAt(tamagochis, x, y)
     if (clicked) {
       interact({ id: clicked._id, action: 'pet' })
     }
   }
-  
+
   return (
     <canvas
       ref={canvasRef}
@@ -149,19 +155,21 @@ export default function TamagochiCanvas() {
 ```
 
 ### 4. Convex Backend Functions
+
 ```typescript
 // convex/tamagochis.ts
-import { v } from "convex/values"
-import { mutation, query } from "./_generated/server"
+import { v } from "convex/values";
+
+import { mutation, query } from "./_generated/server";
 
 export const list = query({
   handler: async (ctx) => {
     return await ctx.db
       .query("tamagochis")
       .filter((q) => q.eq(q.field("alive"), true))
-      .collect()
+      .collect();
   },
-})
+});
 
 export const spawn = mutation({
   args: {
@@ -170,8 +178,8 @@ export const spawn = mutation({
   },
   handler: async (ctx, args) => {
     // Generate unique pixel art
-    const pixelData = generateTamagochiSprite(args.userId + Date.now())
-    
+    const pixelData = generateTamagochiSprite(args.userId + Date.now());
+
     return await ctx.db.insert("tamagochis", {
       userId: args.userId,
       name: args.name,
@@ -183,9 +191,9 @@ export const spawn = mutation({
       birthTime: Date.now(),
       lastUpdated: Date.now(),
       animations: { current: "idle", startTime: Date.now() },
-    })
+    });
   },
-})
+});
 
 export const interact = mutation({
   args: {
@@ -193,30 +201,30 @@ export const interact = mutation({
     action: v.union(v.literal("feed"), v.literal("pet"), v.literal("heal")),
   },
   handler: async (ctx, args) => {
-    const pet = await ctx.db.get(args.id)
-    if (!pet || !pet.alive) return
-    
-    const updates: Partial<typeof pet.stats> = {}
-    
+    const pet = await ctx.db.get(args.id);
+    if (!pet || !pet.alive) return;
+
+    const updates: Partial<typeof pet.stats> = {};
+
     switch (args.action) {
       case "feed":
-        updates.hunger = Math.min(100, pet.stats.hunger + 30)
-        break
+        updates.hunger = Math.min(100, pet.stats.hunger + 30);
+        break;
       case "pet":
-        updates.happiness = Math.min(100, pet.stats.happiness + 20)
-        break
+        updates.happiness = Math.min(100, pet.stats.happiness + 20);
+        break;
       case "heal":
-        updates.health = Math.min(100, pet.stats.health + 25)
-        break
+        updates.health = Math.min(100, pet.stats.health + 25);
+        break;
     }
-    
+
     await ctx.db.patch(args.id, {
       stats: { ...pet.stats, ...updates },
       animations: { current: args.action, startTime: Date.now() },
       lastUpdated: Date.now(),
-    })
+    });
   },
-})
+});
 
 // Background job to update physics and stats
 export const updateGameState = mutation({
@@ -224,43 +232,44 @@ export const updateGameState = mutation({
     const pets = await ctx.db
       .query("tamagochis")
       .filter((q) => q.eq(q.field("alive"), true))
-      .collect()
-    
+      .collect();
+
     for (const pet of pets) {
-      const deltaTime = (Date.now() - pet.lastUpdated) / 1000
-      
+      const deltaTime = (Date.now() - pet.lastUpdated) / 1000;
+
       // Update position
-      let newX = pet.position.x + pet.velocity.x * deltaTime
-      let newY = pet.position.y + pet.velocity.y * deltaTime
-      
+      let newX = pet.position.x + pet.velocity.x * deltaTime;
+      let newY = pet.position.y + pet.velocity.y * deltaTime;
+
       // Bounce off walls
-      if (newX < 0 || newX > 100) pet.velocity.x *= -1
-      if (newY < 0 || newY > 100) pet.velocity.y *= -1
-      
+      if (newX < 0 || newX > 100) pet.velocity.x *= -1;
+      if (newY < 0 || newY > 100) pet.velocity.y *= -1;
+
       // Decay stats
-      const statDecay = deltaTime * 0.1
+      const statDecay = deltaTime * 0.1;
       const newStats = {
         hunger: Math.max(0, pet.stats.hunger - statDecay),
         happiness: Math.max(0, pet.stats.happiness - statDecay * 0.8),
         health: Math.max(0, pet.stats.health - statDecay * 0.5),
-      }
-      
+      };
+
       // Check death conditions
-      const alive = newStats.hunger > 0 && newStats.happiness > 0 && newStats.health > 0
-      
+      const alive = newStats.hunger > 0 && newStats.happiness > 0 && newStats.health > 0;
+
       await ctx.db.patch(pet._id, {
         position: { x: Math.max(0, Math.min(100, newX)), y: Math.max(0, Math.min(100, newY)) },
         velocity: pet.velocity,
         stats: newStats,
         alive,
         lastUpdated: Date.now(),
-      })
+      });
     }
   },
-})
+});
 ```
 
 ### 5. Main Game Page
+
 ```typescript
 // app/(routes)/todo/page.tsx -> rename to tamagochi
 'use client'
@@ -273,16 +282,16 @@ import { api } from '@/convex/_generated/api'
 
 export default function TamagochiPage() {
   const tamagochis = useQuery(api.tamagochis.list)
-  
+
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-6">Multiplayer Tamagochi</h1>
-      
+
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2">
           <TamagochiCanvas />
         </div>
-        
+
         <div className="space-y-4">
           <SpawnForm />
           {tamagochis?.map(pet => (

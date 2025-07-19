@@ -1,18 +1,52 @@
-import Link from "next/link";
+"use client";
+
+import { useEffect, useState } from "react";
+
+import { useMutation } from "convex/react";
+
+import { getOrCreateSessionId } from "@/app/utils/session";
+import { useViewport } from "@/app/utils/viewport";
+import { api } from "@/convex/_generated/api";
+import { Id } from "@/convex/_generated/dataModel";
+
+import VotingDesktop from "@/app/components/VotingDesktop";
+import VotingMobile from "@/app/components/VotingMobile";
 
 export default function Home() {
-  return (
-    <div className="flex min-h-screen flex-col items-center justify-center p-8">
-      <div className="text-center">
-        <h1 className="mb-8 text-6xl font-bold">Hello! 👋</h1>
-        <p className="mb-8 text-xl text-gray-600">Welcome to our Next.js application</p>
-        <Link
-          href="/todo"
-          className="inline-block rounded-lg bg-blue-500 px-8 py-3 text-lg text-white transition-colors hover:bg-blue-600"
-        >
-          Go to Todo List
-        </Link>
+  const { isMobile } = useViewport();
+  const [userId, setUserId] = useState<Id<"users"> | null>(null);
+  const getOrCreateUser = useMutation(api.users.getOrCreateUser);
+  const updateLastSeen = useMutation(api.users.updateLastSeen);
+
+  useEffect(() => {
+    const initUser = async () => {
+      const sessionId = getOrCreateSessionId();
+      if (sessionId) {
+        const id = await getOrCreateUser({ sessionId });
+        setUserId(id);
+      }
+    };
+
+    initUser();
+  }, [getOrCreateUser]);
+
+  useEffect(() => {
+    if (!userId) return;
+
+    const interval = setInterval(() => {
+      updateLastSeen({ userId });
+    }, 30000);
+
+    return () => clearInterval(interval);
+  }, [userId, updateLastSeen]);
+
+  if (!userId) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <div className="text-gray-500">Initializing...</div>
       </div>
-    </div>
-  );
+    );
+  }
+
+  return isMobile ? <VotingMobile userId={userId} /> : <VotingDesktop />;
 }
