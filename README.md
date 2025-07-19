@@ -22,7 +22,9 @@ It is recommended to run this project within it's [Devcontainer](./.devcontainer
 
 ## Using the PRP System
 
-The PRP (Plan, Review, Proceed) system helps you manage development tasks efficiently:
+Inspired by [Context Engineering Intro](https://github.com/coleam00/context-engineering-intro).
+
+The PRP system helps you manage development tasks efficiently:
 
 1. **Add your IDEA** to `prp/ideas/foo.idea.md`
 2. **Generate a PLAN** in yolo mode with `/generate-plan foo.idea.md`
