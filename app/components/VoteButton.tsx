@@ -28,25 +28,18 @@ export default function VoteButton({ type, onVote }: VoteButtonProps) {
       onMouseDown={handleStart}
       onMouseUp={handleEnd}
       onMouseLeave={handleEnd}
-      className={`relative transition-transform ${isPressed ? "scale-95" : "scale-100"}`}
+      className={`relative transition-all duration-200 ${
+        isPressed ? "scale-110 animate-pulse" : "scale-100"
+      }`}
       data-testid={`vote-button-${type}`}
     >
       <div
-        className={`flex h-32 w-32 items-center justify-center rounded-full ${
+        className={`flex h-32 w-32 items-center justify-center rounded-full transition-all duration-200 ${
           type === "O" ? "bg-green-500" : "bg-red-500"
-        }`}
+        } ${isPressed ? "shadow-lg shadow-gray-400" : ""}`}
       >
         <span className="text-4xl text-white">{type}</span>
       </div>
-
-      {isPressed && (
-        <div
-          className="absolute -top-16 left-1/2 -translate-x-1/2 animate-bounce rounded border-2 border-gray-800 bg-white p-2"
-          data-testid={`vote-indicator-${type}`}
-        >
-          <span className="text-2xl">{type}</span>
-        </div>
-      )}
     </button>
   );
 }

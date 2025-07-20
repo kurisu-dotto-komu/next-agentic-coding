@@ -4,8 +4,8 @@ import { useQuery } from "convex/react";
 
 import { api } from "@/convex/_generated/api";
 
+import AnimatedVotingAvatar from "@/app/components/AnimatedVotingAvatar";
 import QRCode from "@/app/components/QRCode";
-import UserAvatar from "@/app/components/UserAvatar";
 import VoteBar from "@/app/components/VoteBar";
 
 export default function VotingDesktop() {
@@ -37,19 +37,12 @@ export default function VotingDesktop() {
         <div className="rounded-lg bg-gray-50 p-8">
           <div className="flex flex-wrap items-center justify-center gap-4">
             {users.map((user) => (
-              <div key={user._id} className="relative">
-                <UserAvatar avatarSeed={user.avatarSeed} className={getAvatarSize()} />
-                {user.currentVote && (
-                  <div
-                    className={`absolute -top-2 -right-2 flex h-8 w-8 items-center justify-center rounded-full text-white ${
-                      user.currentVote === "O" ? "bg-green-500" : "bg-red-500"
-                    }`}
-                    data-testid={`user-vote-${user.currentVote}`}
-                  >
-                    <span className="text-xs font-bold">{user.currentVote}</span>
-                  </div>
-                )}
-              </div>
+              <AnimatedVotingAvatar
+                key={user._id}
+                avatarSeed={user.avatarSeed}
+                currentVote={user.currentVote}
+                className={getAvatarSize()}
+              />
             ))}
           </div>
 
