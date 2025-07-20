@@ -2,7 +2,7 @@
 
 Basic `create-next-app` boilerplate with some additional Agentic Engineering features.
 
-It is recommended to run this project within it's [Devcontainer](./.devcontainer/devcontainer.json).
+For best results, run this project within it's [Devcontainer](./.devcontainer/devcontainer.json), using VSCode or Cursor.
 
 ## Useful Scripts
 
