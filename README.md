@@ -1,4 +1,4 @@
-> See [Presentation Slides with Notes](./Agentic Coding Notes.pdf)
+> See [Presentation Slides with Notes](./Agentic%20Coding%20Notes.pdf)
 
 # Next Agentic Coding Boilerplate
 
