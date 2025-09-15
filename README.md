@@ -1,3 +1,5 @@
+> See [Presentation Slides with Notes](./Agentic Coding Notes.pdf)
+
 # Next Agentic Coding Boilerplate
 
 Basic `create-next-app` boilerplate with some additional Agentic Engineering features.
